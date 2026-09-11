@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Private local-first life admin for international students and expats in the United States.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; worker-src 'self'; manifest-src 'self'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f2efe5">
+  <title>Orbit Abroad — Your private life-admin desk</title>
+  <link rel="canonical" href="https://gdifranco1.github.io/orbit-abroad/app.html">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="edition-bar">
+      <span>Free private beta · United States</span>
+      <span>Local-first · No account required</span>
+    </div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Orbit home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>ORBIT</span><span class="plus-badge">ABROAD</span>
+      </a>
+      <div class="header-actions">
+        <button class="button button-quiet" id="installButton" type="button" hidden>Install app</button>
+        <button class="button button-quiet" id="feedbackButton" type="button">Feedback</button>
+        <button class="button button-quiet" id="notificationButton" type="button">Enable reminders</button>
+        <button class="button button-dark" id="openFormButton" type="button"><span aria-hidden="true">＋</span> Add task</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-story">
+          <p class="section-number">01 / THE DAILY BRIEF</p>
+          <p class="eyebrow" id="todayLabel"></p>
+          <h1>Your life abroad,<br><em>understood.</em></h1>
+          <p class="hero-copy">Turn unfamiliar U.S. bills, notices, appointments, and renewals into clear tasks—without uploading the document.</p>
+        </div>
+        <aside class="daily-brief">
+          <div class="brief-rule"><span>Today’s briefing</span><span id="briefIssue">No. 001</span></div>
+          <strong id="briefHeadline">Your desk is being prepared.</strong>
+          <p id="briefCopy">Orbit is checking what needs your attention next.</p>
+          <button class="brief-link" id="briefInboxButton" type="button">Open Smart Inbox <span>↘</span></button>
+        </aside>
+      </section>
+
+      <section class="smart-inbox" id="smartInbox">
+        <div class="smart-heading">
+          <div>
+            <p class="section-number inverse">02 / DOCUMENT INTELLIGENCE</p>
+            <p class="eyebrow">SMART INBOX · PRIVATE LOCAL ANALYSIS</p>
+            <h2>Drop the fine print<br><em>on our desk.</em></h2>
+          </div>
+          <span class="local-pill"><i></i> Runs on this device</span>
+        </div>
+
+        <div class="smart-grid">
+          <div class="paste-panel">
+            <label for="inboxText">Paste a bill, letter, email, or appointment notice</label>
+            <div class="document-input">
+              <div class="document-chrome"><span>Untitled notice.txt</span><span>LOCAL</span></div>
+              <textarea id="inboxText" rows="8" placeholder="Example: Your electricity bill of $128.44 is due on September 28, 2026. Account ending 4821."></textarea>
+              <div class="scan-beam" aria-hidden="true"></div>
+            </div>
+            <div class="paste-actions">
+              <label class="example-picker"><span>Example</span><select id="exampleSelect"><option value="utility">Utility bill</option><option value="visa">Visa reminder</option><option value="appointment">Health appointment</option><option value="university">University document</option></select></label>
+              <button class="text-action" id="exampleButton" type="button">Load example</button>
+              <button class="button button-coral" id="analyzeButton" type="button">Find the task <span aria-hidden="true">→</span></button>
+            </div>
+            <p class="smart-privacy">🔒 Pasted text is analyzed in your browser and is not uploaded or saved.</p>
+          </div>
+          <div class="review-panel" id="smartReview" aria-live="polite">
+            <div class="review-empty">
+              <span class="scan-mark" aria-hidden="true">⌁</span>
+              <strong>Ready when you are</strong>
+              <p>Orbit will suggest a task for you to review before anything is added.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Task summary">
+        <article><span class="stat-dot coral"></span><strong id="dueSoonCount">0</strong><p>Due soon</p></article>
+        <article><span class="stat-dot ink"></span><strong id="upcomingCount">0</strong><p>Upcoming</p></article>
+        <article><span class="stat-dot sage"></span><strong id="completedCount">0</strong><p>Completed</p></article>
+      </section>
+
+      <section class="workspace">
+        <div class="section-heading">
+          <div>
+            <p class="section-number">03 / ACTION REGISTER</p>
+            <p class="eyebrow">YOUR ORBIT</p>
+            <h2>What needs your attention</h2>
+          </div>
+          <label class="search-field">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Search tasks" autocomplete="off">
+          </label>
+        </div>
+
+        <div class="controls">
+          <div class="tabs" id="viewTabs" role="tablist" aria-label="Task views">
+            <button class="tab active" data-view="active" role="tab">Active</button>
+            <button class="tab" data-view="today" role="tab">Today</button>
+            <button class="tab" data-view="upcoming" role="tab">Upcoming</button>
+            <button class="tab" data-view="completed" role="tab">Completed</button>
+          </div>
+          <label class="select-wrap">Category
+            <select id="categoryFilter">
+              <option value="all">All</option>
+              <option value="bill">Bills</option>
+              <option value="renewal">Renewals</option>
+              <option value="appointment">Appointments</option>
+              <option value="document">Documents</option>
+            </select>
+          </label>
+          <div class="data-actions">
+            <button class="mini-button" id="exportButton" type="button">Export backup</button>
+            <label class="mini-button import-label">Import backup<input id="importInput" type="file" accept="application/json,.json" hidden></label>
+          </div>
+        </div>
+
+        <div class="task-list" id="taskList" aria-live="polite"></div>
+      </section>
+      <div class="app-trust-footer">
+        <span>Orbit organizes information—it does not provide legal, immigration, financial, or medical advice.</span>
+        <span><button class="footer-button" id="settingsButton" type="button">Settings & safety</button> · <a href="privacy.html">Privacy & limitations</a> · <a href="index.html">About Orbit Abroad</a></span>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="welcomeDialog" class="launch-dialog">
+    <form id="welcomeForm" method="dialog">
+      <p class="section-number">WELCOME / PRIVATE BETA</p>
+      <h2>A calmer desk for life in a new country.</h2>
+      <p class="dialog-lede">Orbit works locally in this browser. Before your first notice, set your defaults and learn what not to paste.</p>
+      <div class="onboarding-grid">
+        <label class="field">Region
+          <select id="regionInput"><option value="US" selected>United States</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="EU">European Union</option><option value="other">Other</option></select>
+        </label>
+        <label class="field">Numeric date format
+          <select id="dateOrderInput"><option value="MDY" selected>MM/DD/YYYY</option><option value="DMY">DD/MM/YYYY</option><option value="YMD">YYYY-MM-DD</option></select>
+        </label>
+      </div>
+      <div class="redaction-card">
+        <strong>Redact before you paste</strong>
+        <p>Keep the wording that explains the action and deadline. Remove:</p>
+        <ul><li>Social Security and full passport numbers</li><li>Bank, card, login, and authentication details</li><li>Full addresses or medical details you do not need in the task</li></ul>
+      </div>
+      <label class="consent-check"><input id="redactionConsent" type="checkbox" required><span>I understand that I should remove sensitive information and review every suggestion.</span></label>
+      <button class="danger-link" id="resetDataButton" type="button">Delete all local Orbit data</button>
+      <div class="dialog-actions"><a class="privacy-link" href="privacy.html">Read privacy notice</a><button class="button button-dark" type="submit">Set up my desk</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="feedbackDialog" class="launch-dialog feedback-dialog">
+    <form id="feedbackForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">PRIVATE BETA FEEDBACK</p><h2>Help shape Orbit.</h2></div><button class="icon-button" id="closeFeedbackButton" type="button" aria-label="Close">×</button></div>
+      <label class="field">How useful was this session?
+        <select id="feedbackRating"><option value="5">5 — Extremely useful</option><option value="4">4 — Useful</option><option value="3">3 — Somewhat useful</option><option value="2">2 — Not very useful</option><option value="1">1 — Not useful</option></select>
+      </label>
+      <label class="field field-wide">What confused you or felt missing?
+        <textarea id="feedbackText" rows="5" maxlength="1000" required placeholder="The most important thing for us to improve is…"></textarea>
+      </label>
+      <p class="privacy-note">Feedback stays in this form until you download it. Orbit does not send it automatically.</p>
+      <div class="dialog-actions"><a class="privacy-link" href="mailto:gdifranco100@gmail.com?subject=Orbit%20Abroad%20beta%20feedback">Email instead</a><button class="button button-dark" type="submit">Download feedback note</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="taskDialog">
+    <form id="taskForm" method="dialog">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">NEW ITEM</p><h2>Add to your orbit</h2></div>
+        <button class="icon-button" id="closeFormButton" type="button" aria-label="Close">×</button>
+      </div>
+
+      <label class="field field-wide">What needs doing?
+        <input id="titleInput" name="title" maxlength="80" required placeholder="e.g. Renew passport">
+      </label>
+      <div class="field-grid">
+        <label class="field">Category
+          <select id="categoryInput" name="category">
+            <option value="bill">Bill</option>
+            <option value="renewal">Renewal</option>
+            <option value="appointment">Appointment</option>
+            <option value="document">Document</option>
+          </select>
+        </label>
+        <label class="field">Deadline
+          <input id="dateInput" name="date" type="date" required>
+        </label>
+        <label class="field">Time <small>(optional)</small>
+          <input id="timeInput" name="time" type="time">
+        </label>
+        <label class="field">Remind me
+          <select id="reminderInput" name="reminder">
+            <option value="0">At deadline</option>
+            <option value="15">15 minutes before</option>
+            <option value="60">1 hour before</option>
+            <option value="1440" selected>1 day before</option>
+            <option value="10080">1 week before</option>
+            <option value="none">No reminder</option>
+          </select>
+        </label>
+      </div>
+      <label class="field field-wide">Note or reference <small>(optional)</small>
+        <textarea id="notesInput" name="notes" maxlength="240" rows="3" placeholder="Account, location, document name…"></textarea>
+      </label>
+      <p class="privacy-note">🔒 Saved only in this browser on this device.</p>
+      <div class="dialog-actions">
+        <button class="button button-quiet" id="cancelFormButton" type="button">Cancel</button>
+        <button class="button button-dark" type="submit">Add task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="core.js"></script>
+  <script src="smart-inbox.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

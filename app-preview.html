@@ -1,0 +1,1201 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Private local-first life admin for international students and expats in the United States.">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f2efe5">
+  <title>Orbit Abroad — Your private life-admin desk</title>
+  <link rel="canonical" href="https://gdifranco1.github.io/orbit-abroad/app.html">
+  <style>
+:root {
+  --paper: #f4f1e8;
+  --paper-deep: #e9e4d7;
+  --ink: #17211d;
+  --muted: #68716b;
+  --line: rgba(23, 33, 29, .14);
+  --coral: #f2765f;
+  --coral-soft: #f9d8ce;
+  --sage: #8ba796;
+  --sage-soft: #dce7dd;
+  --white: #fffefa;
+  --shadow: 0 24px 70px rgba(35, 43, 38, .14);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; }
+button { color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(242, 118, 95, .35);
+  outline-offset: 2px;
+}
+
+.app-shell { max-width: 1180px; margin: 0 auto; padding: 0 28px 64px; }
+.topbar {
+  height: 86px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-weight: 760; font-size: 20px; letter-spacing: -.03em; }
+.brand-mark { width: 29px; height: 29px; border: 2px solid var(--ink); border-radius: 50%; position: relative; display: grid; place-items: center; }
+.brand-mark::before { content: ""; position: absolute; width: 38px; height: 13px; border: 1.5px solid var(--ink); border-radius: 50%; transform: rotate(-25deg); }
+.brand-mark span { width: 7px; height: 7px; background: var(--coral); border-radius: 50%; }
+.plus-badge { margin-left: -4px; padding: 3px 6px; border-radius: 5px; color: var(--white); background: var(--coral); font-size: 8px; letter-spacing: .12em; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.button { border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer; font-weight: 700; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+.button:hover { transform: translateY(-1px); }
+.button-dark { color: var(--white); background: var(--ink); box-shadow: 0 8px 20px rgba(23,33,29,.16); }
+.button-dark:hover { box-shadow: 0 12px 24px rgba(23,33,29,.22); }
+.button-coral { color: var(--white); background: var(--coral); box-shadow: 0 8px 20px rgba(242,118,95,.2); }
+.button-coral:hover { box-shadow: 0 12px 25px rgba(242,118,95,.3); }
+.button-quiet { background: transparent; border: 1px solid var(--line); }
+.button-quiet:hover { background: rgba(255,255,255,.45); }
+
+.hero { min-height: 380px; padding: 72px 4% 55px; display: flex; align-items: center; justify-content: space-between; overflow: hidden; }
+.eyebrow { margin: 0 0 14px; color: var(--coral); font-size: 11px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+h1 { margin: 0; max-width: 690px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(50px, 7.2vw, 86px); line-height: .92; letter-spacing: -.055em; font-weight: 500; }
+h1 em { color: var(--coral); font-weight: 500; }
+.hero-copy { max-width: 540px; margin: 27px 0 0; color: var(--muted); font-size: 17px; line-height: 1.65; }
+.hero-orbit { flex: 0 0 260px; width: 260px; height: 260px; margin-left: 20px; border: 1px solid var(--line); border-radius: 50%; position: relative; transform: rotate(-16deg); }
+.hero-orbit::before, .hero-orbit::after { content: ""; position: absolute; inset: 34px; border: 1px solid var(--line); border-radius: 50%; }
+.hero-orbit::after { inset: 76px; }
+.planet { position: absolute; left: 50%; top: 50%; width: 66px; height: 66px; transform: translate(-50%,-50%); border-radius: 50%; background: var(--ink); box-shadow: inset -13px -8px 0 rgba(255,255,255,.08), 0 18px 40px rgba(23,33,29,.22); }
+.moon { position: absolute; border-radius: 50%; }
+.moon-one { width: 22px; height: 22px; background: var(--coral); left: 22px; top: 82px; }
+.moon-two { width: 11px; height: 11px; background: var(--sage); right: 32px; bottom: 58px; }
+
+.smart-inbox { margin-bottom: 22px; padding: 36px 38px 38px; border: 1px solid var(--line); border-radius: 22px; color: var(--white); background: var(--ink); box-shadow: 0 22px 55px rgba(23,33,29,.18); }
+.smart-heading { display: flex; align-items: start; justify-content: space-between; gap: 24px; }
+.smart-heading h2 { margin: 0; font-family: Georgia, serif; font-size: clamp(27px, 4vw, 40px); font-weight: 500; letter-spacing: -.035em; }
+.local-pill { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto; padding: 8px 11px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #b9c3bd; font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.local-pill i { width: 6px; height: 6px; border-radius: 50%; background: #94c7a6; box-shadow: 0 0 8px #94c7a6; }
+.smart-grid { display: grid; grid-template-columns: minmax(0,1.04fr) minmax(0,.96fr); gap: 18px; margin-top: 28px; }
+.paste-panel, .review-panel { min-height: 294px; padding: 22px; border: 1px solid rgba(255,255,255,.13); border-radius: 14px; background: rgba(255,255,255,.045); }
+.paste-panel label { display: block; margin-bottom: 10px; color: #c8d0ca; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.paste-panel textarea { width: 100%; min-height: 145px; padding: 14px; border: 1px solid rgba(255,255,255,.14); border-radius: 10px; outline: 0; color: var(--white); background: rgba(0,0,0,.2); font-size: 13px; line-height: 1.6; resize: vertical; }
+.paste-panel textarea:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(242,118,95,.14); }
+.paste-panel textarea::placeholder { color: #78827c; }
+.paste-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 13px; }
+.text-action { padding: 8px 0; border: 0; border-bottom: 1px solid rgba(255,255,255,.22); color: #aeb7b1; background: transparent; cursor: pointer; font-size: 11px; }
+.text-action:hover { color: var(--white); }
+.smart-privacy { margin: 15px 0 0; color: #7f8a84; font-size: 9px; }
+.review-panel { display: flex; flex-direction: column; }
+.review-empty { max-width: 255px; margin: auto; text-align: center; color: #86918a; }
+.review-empty .scan-mark { display: grid; place-items: center; width: 48px; height: 48px; margin: 0 auto 13px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; color: var(--coral); font-size: 26px; }
+.review-empty strong { display: block; margin-bottom: 7px; color: #dfe5e0; font-family: Georgia, serif; font-size: 19px; font-weight: 500; }
+.review-empty p { margin: 0; font-size: 11px; line-height: 1.55; }
+.review-topline { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 15px; }
+.review-topline p { margin: 0; color: #9ba69f; font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.confidence { display: flex; align-items: center; gap: 7px; color: #c6cec8; font-size: 9px; }
+.confidence-meter { width: 54px; height: 4px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.12); }
+.confidence-meter i { display: block; height: 100%; border-radius: inherit; background: var(--coral); }
+.finding-list { display: flex; gap: 6px; margin-bottom: 15px; overflow: hidden; }
+.finding-chip { max-width: 120px; padding: 5px 7px; overflow: hidden; border-radius: 5px; color: #cbd3cd; background: rgba(255,255,255,.08); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.smart-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.smart-field { display: grid; gap: 5px; color: #8e9992; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.smart-field.wide { grid-column: 1/-1; }
+.smart-field input, .smart-field select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid rgba(255,255,255,.13); border-radius: 7px; color: var(--white); background: #222c27; font-size: 11px; font-weight: 600; letter-spacing: normal; text-transform: none; }
+.smart-field input:focus, .smart-field select:focus { border-color: var(--coral); outline: 0; }
+.smart-warning { margin: 9px 0 0; color: #ffc2b6; font-size: 9px; }
+.review-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 15px; }
+.review-actions .button { padding: 9px 14px; font-size: 11px; }
+.review-actions small { color: #7f8a84; font-size: 8px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); background: rgba(255,254,250,.64); border: 1px solid var(--line); border-radius: 22px 22px 0 0; }
+.stats article { position: relative; padding: 27px 32px; border-right: 1px solid var(--line); }
+.stats article:last-child { border-right: 0; }
+.stats strong { display: block; margin-left: 18px; font-family: Georgia, serif; font-size: 34px; font-weight: 500; }
+.stats p { margin: 3px 0 0 18px; color: var(--muted); font-size: 13px; }
+.stat-dot { position: absolute; top: 35px; left: 30px; width: 7px; height: 7px; border-radius: 50%; }
+.coral { background: var(--coral); }.ink { background: var(--ink); }.sage { background: var(--sage); }
+
+.workspace { min-height: 420px; padding: 42px 40px; background: var(--white); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 22px 22px; box-shadow: var(--shadow); }
+.section-heading, .controls { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.section-heading h2, .dialog-heading h2 { margin: 0; font-family: Georgia, serif; font-size: 31px; font-weight: 500; letter-spacing: -.025em; }
+.search-field { display: flex; align-items: center; gap: 7px; width: 230px; padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.search-field input { width: 100%; border: 0; outline: 0; background: transparent; }
+.controls { margin-top: 38px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab { padding: 8px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; }
+.tab:hover { background: var(--paper); }
+.tab.active { color: var(--white); background: var(--ink); }
+.select-wrap { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.select-wrap select { border: 0; border-bottom: 1px solid var(--line); padding: 7px 22px 7px 5px; background: transparent; color: var(--ink); }
+.data-actions { display: flex; align-items: center; gap: 5px; margin-left: auto; }
+.data-actions .mini-button { padding: 7px 8px; border: 1px solid var(--line); text-decoration: none; }
+.import-label { cursor: pointer; }
+.task-list { display: grid; gap: 11px; padding-top: 18px; }
+.task-card { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 17px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); transition: transform .18s ease, box-shadow .18s ease, border .18s ease; animation: rise .3s ease both; }
+.task-card:hover { transform: translateY(-2px); border-color: rgba(23,33,29,.26); box-shadow: 0 12px 28px rgba(35,43,38,.08); }
+.task-card.is-complete { opacity: .62; }
+.task-card.is-complete .task-title { text-decoration: line-through; }
+.check-button { width: 25px; height: 25px; display: grid; place-items: center; border: 1.5px solid var(--sage); border-radius: 50%; background: transparent; color: transparent; cursor: pointer; }
+.check-button:hover, .is-complete .check-button { color: var(--white); background: var(--sage); }
+.task-main { min-width: 0; }
+.task-topline { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.category-pill { padding: 4px 8px; border-radius: 999px; background: var(--paper); color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.task-title { margin: 0; font-size: 15px; font-weight: 780; overflow-wrap: anywhere; }
+.task-note { margin: 5px 0 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.task-side { min-width: 135px; text-align: right; }
+.due-label { display: block; font-size: 12px; font-weight: 780; }
+.due-label.overdue { color: #c84f3c; }
+.due-label.soon { color: var(--coral); }
+.task-actions { display: flex; justify-content: flex-end; gap: 2px; margin-top: 5px; opacity: 0; transition: opacity .18s; }
+.task-card:hover .task-actions, .task-card:focus-within .task-actions { opacity: 1; }
+.mini-button { border: 0; padding: 4px 6px; color: var(--muted); background: transparent; cursor: pointer; font-size: 11px; }
+.mini-button:hover { color: var(--ink); text-decoration: underline; }
+.empty-state { padding: 65px 20px; text-align: center; color: var(--muted); }
+.empty-state strong { display: block; margin-bottom: 7px; color: var(--ink); font-family: Georgia, serif; font-size: 23px; font-weight: 500; }
+
+#taskDialog { width: min(620px, calc(100% - 28px)); padding: 0; border: 0; border-radius: 22px; color: var(--ink); background: var(--white); box-shadow: 0 28px 90px rgba(23,33,29,.3); }
+#taskDialog::backdrop { background: rgba(23,33,29,.48); backdrop-filter: blur(3px); }
+#taskForm { padding: 31px; }
+.dialog-heading { display: flex; align-items: start; justify-content: space-between; margin-bottom: 27px; }
+.icon-button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font-size: 22px; line-height: 1; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.field { display: grid; gap: 7px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.field-wide { margin-bottom: 15px; }
+.field input, .field select, .field textarea { width: 100%; padding: 12px 13px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--paper); font-size: 14px; font-weight: 500; letter-spacing: normal; text-transform: none; resize: vertical; }
+.field small { font-weight: 500; text-transform: none; }
+.privacy-note { margin: 17px 0 0; color: var(--muted); font-size: 11px; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 21px; }
+.toast { position: fixed; left: 50%; bottom: 25px; z-index: 10; padding: 11px 17px; border-radius: 999px; color: var(--white); background: var(--ink); box-shadow: var(--shadow); font-size: 13px; font-weight: 700; opacity: 0; transform: translate(-50%, 20px); pointer-events: none; transition: .25s ease; }
+.toast.show { opacity: 1; transform: translate(-50%,0); }
+@keyframes rise { from { opacity: 0; transform: translateY(7px); } }
+
+/* Editorial command-center layer */
+body {
+  background:
+    linear-gradient(90deg, transparent 0, transparent calc(50% - .5px), rgba(23,33,29,.035) 50%, transparent calc(50% + .5px)),
+    var(--paper);
+}
+.app-shell { max-width: 1280px; padding: 0 34px 72px; }
+.edition-bar { height: 27px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--ink); color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 8px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.topbar { height: 73px; border-bottom: 3px double var(--ink); }
+.brand { font-family: Georgia, serif; font-size: 23px; letter-spacing: .08em; }
+.brand-mark { width: 25px; height: 25px; }
+.brand-mark::before { width: 34px; height: 11px; }
+.button { border-radius: 2px; text-transform: uppercase; letter-spacing: .075em; font-size: 10px; }
+.button-dark { box-shadow: 4px 4px 0 var(--coral); }
+.button-dark:hover { box-shadow: 6px 6px 0 var(--coral); transform: translate(-1px,-1px); }
+.button-coral { box-shadow: 4px 4px 0 rgba(255,255,255,.14); }
+.section-number { margin: 0 0 24px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 8px; font-weight: 800; letter-spacing: .17em; }
+.section-number.inverse { color: #77847d; }
+.hero { min-height: 485px; display: grid; grid-template-columns: minmax(0,1fr) 315px; gap: 8%; padding: 72px 2% 65px; border-bottom: 1px solid var(--ink); }
+.hero-story { min-width: 0; }
+.hero .eyebrow { margin-bottom: 19px; }
+h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
+.hero-copy { max-width: 610px; padding-left: 76px; position: relative; font-size: 15px; }
+.hero-copy::before { content: ""; position: absolute; left: 0; top: 12px; width: 52px; height: 1px; background: var(--coral); }
+.daily-brief { align-self: end; padding: 20px 0 0; border-top: 5px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.brief-rule { display: flex; justify-content: space-between; padding-bottom: 9px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.daily-brief > strong { display: block; margin: 23px 0 9px; font-family: Georgia, serif; font-size: 27px; font-weight: 500; line-height: 1.06; letter-spacing: -.025em; }
+.daily-brief > p { min-height: 48px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.brief-link { width: 100%; display: flex; justify-content: space-between; margin-top: 22px; padding: 12px 0; border: 0; border-top: 1px solid var(--ink); color: var(--ink); background: transparent; cursor: pointer; font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.brief-link:hover { color: var(--coral); }
+
+.smart-inbox { position: relative; margin: 24px 0; padding: 44px; overflow: hidden; border: 0; border-radius: 0; background: #131b17; box-shadow: 12px 12px 0 var(--coral); }
+.smart-inbox::after { content: "ORBIT / READS LOCALLY / 02"; position: absolute; right: -96px; top: 50%; color: rgba(255,255,255,.045); font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: .18em; transform: rotate(90deg); }
+.smart-heading h2 { font-size: clamp(38px, 5vw, 62px); line-height: .93; }
+.smart-heading h2 em { color: var(--coral); font-weight: 500; }
+.smart-grid { grid-template-columns: minmax(0,1.08fr) minmax(350px,.92fr); gap: 0; margin-top: 38px; border-top: 1px solid rgba(255,255,255,.18); }
+.paste-panel, .review-panel { min-height: 365px; padding: 25px 0 0; border: 0; border-radius: 0; background: transparent; }
+.paste-panel { padding-right: 30px; }
+.review-panel { padding-left: 30px; border-left: 1px solid rgba(255,255,255,.18); }
+.document-input { position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.18); background: #0d120f; }
+.document-chrome { height: 29px; display: flex; align-items: center; justify-content: space-between; padding: 0 11px; border-bottom: 1px solid rgba(255,255,255,.12); color: #728078; font-family: ui-monospace, monospace; font-size: 7px; letter-spacing: .1em; }
+.paste-panel textarea { min-height: 177px; display: block; padding: 16px; border: 0; border-radius: 0; background: transparent; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; line-height: 1.75; }
+.paste-panel textarea:focus { box-shadow: inset 3px 0 0 var(--coral); }
+.scan-beam { position: absolute; left: 0; right: 0; top: 29px; height: 2px; opacity: 0; background: var(--coral); box-shadow: 0 0 14px var(--coral), 0 10px 34px rgba(242,118,95,.28); pointer-events: none; }
+.smart-inbox.is-scanning .scan-beam { opacity: 1; animation: scanDocument 1.2s cubic-bezier(.65,0,.35,1) infinite; }
+.smart-inbox.is-scanning textarea { color: #a5aea8; }
+.paste-actions { margin-top: 17px; }
+.example-picker { display: flex !important; align-items: center; gap: 7px; margin: 0 !important; color: #7f8a84 !important; font-size: 7px !important; }
+.example-picker select { max-width: 122px; padding: 7px 20px 7px 8px; border: 1px solid rgba(255,255,255,.14); color: #c9d1cc; background: #1c2621; font-size: 9px; }
+.finding-list { flex-wrap: wrap; overflow: visible; }
+.finding-chip { position: relative; max-width: 145px; border-radius: 0; animation: editorialReveal .34s ease both; }
+.finding-chip::before { content: "+"; margin-right: 4px; color: var(--coral); }
+.review-panel.has-result { animation: editorialReveal .4s ease both; }
+.smart-field input, .smart-field select { border-radius: 0; background: #1c2621; }
+.confidence-meter { border-radius: 0; }
+.confidence-meter i { border-radius: 0; }
+.analysis-stage { width: 100%; margin: auto 0; }
+.analysis-kicker { display: flex; align-items: center; gap: 9px; margin-bottom: 25px; color: var(--coral); font-family: ui-monospace, monospace; font-size: 8px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.analysis-kicker i { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 0 rgba(242,118,95,.5); animation: signalPulse 1.1s infinite; }
+.analysis-stage > strong { display: block; margin-bottom: 24px; font-family: Georgia, serif; font-size: 25px; font-weight: 500; }
+.analysis-steps { border-top: 1px solid rgba(255,255,255,.14); }
+.analysis-step { display: grid; grid-template-columns: 25px 1fr auto; gap: 9px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.1); color: #647169; font-family: ui-monospace, monospace; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; transition: color .24s, transform .24s; }
+.analysis-step::after { content: "WAITING"; font-size: 7px; }
+.analysis-step.active { color: var(--white); transform: translateX(4px); }
+.analysis-step.active::after { content: "READING"; color: var(--coral); }
+.analysis-step.done { color: #9fb1a7; }
+.analysis-step.done::after { content: "FOUND"; color: #94c7a6; }
+.analysis-progress { height: 2px; margin-top: 25px; background: rgba(255,255,255,.11); }
+.analysis-progress i { display: block; width: 5%; height: 100%; background: var(--coral); transition: width .35s ease; }
+
+.stats { border: 0; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); border-radius: 0; background: transparent; }
+.stats article { padding: 24px 28px; }
+.stats strong { font-size: 40px; }
+.workspace { margin-top: 18px; padding: 48px 38px; border: 1px solid var(--ink); border-radius: 0; box-shadow: none; }
+.section-heading h2 { font-size: 39px; }
+.task-list { gap: 0; }
+.task-card { border-width: 0 0 1px; border-radius: 0; padding: 19px 10px; }
+.task-card:first-child { border-top: 1px solid var(--line); }
+.task-card:hover { transform: translateX(4px); box-shadow: none; background: #faf8f1; }
+.category-pill { border-radius: 0; }
+.app-trust-footer { display: flex; align-items: start; justify-content: space-between; gap: 30px; padding: 22px 3px 0; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.app-trust-footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.footer-button { padding: 0; border: 0; border-bottom: 1px solid var(--line); color: var(--ink); background: transparent; cursor: pointer; font: inherit; }
+
+.launch-dialog { width: min(680px,calc(100% - 28px)); padding: 0; border: 0; border-radius: 0; color: var(--ink); background: var(--white); box-shadow: 10px 10px 0 var(--coral),0 32px 100px rgba(23,33,29,.35); }
+.launch-dialog::backdrop { background: rgba(15,22,18,.72); backdrop-filter: blur(4px); }
+.launch-dialog form { padding: 38px; }
+.launch-dialog h2 { margin: 0; max-width: 550px; font-family: Georgia,serif; font-size: 39px; line-height: .98; font-weight: 500; letter-spacing: -.035em; }
+.dialog-lede { max-width: 570px; margin: 17px 0 24px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.onboarding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.redaction-card { margin: 19px 0; padding: 18px 20px; border-left: 4px solid var(--coral); background: var(--paper); }
+.redaction-card strong { font-family: Georgia,serif; font-size: 18px; font-weight: 500; }
+.redaction-card p { margin: 7px 0; color: var(--muted); font-size: 10px; }
+.redaction-card ul { margin: 8px 0 0; padding-left: 17px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.consent-check { display: flex; align-items: start; gap: 9px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.consent-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--coral); }
+.privacy-link { align-self: center; color: var(--muted); font-size: 9px; text-decoration: none; border-bottom: 1px solid var(--line); }
+.danger-link { margin-top: 17px; padding: 0; border: 0; border-bottom: 1px solid #bd5544; color: #bd5544; background: transparent; cursor: pointer; font-size: 9px; }
+.feedback-dialog .field { margin-bottom: 16px; }
+
+@keyframes scanDocument { 0% { transform: translateY(0); } 50% { transform: translateY(174px); } 100% { transform: translateY(0); } }
+@keyframes signalPulse { 70% { box-shadow: 0 0 0 7px rgba(242,118,95,0); } 100% { box-shadow: 0 0 0 0 rgba(242,118,95,0); } }
+@keyframes editorialReveal { from { opacity: 0; transform: translateY(7px); } }
+
+@media (max-width: 760px) {
+  .app-shell { padding: 0 15px 38px; }
+  .edition-bar { display: none; }
+  .topbar { height: 72px; }
+  .header-actions .button-quiet { display: none; }
+  .header-actions #feedbackButton { display: block; padding: 8px; border: 0; }
+  .hero { min-height: 0; grid-template-columns: 1fr; gap: 46px; padding: 53px 2% 43px; }
+  h1 { font-size: clamp(54px, 16vw, 74px); }
+  .hero-copy { padding-left: 0; }
+  .hero-copy::before { display: none; }
+  .daily-brief { width: 100%; }
+  .hero-orbit { display: none; }
+  .smart-inbox { margin-right: 6px; padding: 30px 20px; box-shadow: 6px 6px 0 var(--coral); }
+  .smart-heading { flex-direction: column; }
+  .smart-grid { grid-template-columns: 1fr; }
+  .paste-panel { padding-right: 0; }
+  .review-panel { padding-left: 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.18); }
+  .paste-panel, .review-panel { min-height: 270px; }
+  .stats article { padding: 21px 13px; }
+  .stats strong, .stats p { margin-left: 12px; }
+  .stat-dot { left: 13px; top: 29px; }
+  .workspace { padding: 30px 18px; }
+  .section-heading { align-items: start; flex-direction: column; }
+  .search-field { width: 100%; }
+  .controls { align-items: start; flex-direction: column; gap: 13px; }
+  .data-actions { margin-left: 0; }
+  .task-card { grid-template-columns: auto minmax(0,1fr); gap: 13px; }
+  .task-side { grid-column: 2; text-align: left; min-width: 0; }
+  .task-actions { justify-content: flex-start; opacity: 1; }
+  .field-grid { grid-template-columns: 1fr; }
+  .paste-actions { flex-wrap: wrap; }
+  .example-picker { order: 1; }
+  #exampleButton { order: 2; }
+  #analyzeButton { order: 3; margin-left: auto; }
+  .app-trust-footer { flex-direction: column; gap: 10px; }
+  .launch-dialog form { padding: 27px 21px; }
+  .launch-dialog h2 { font-size: 32px; }
+  .onboarding-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } .scan-beam { display: none; } }
+
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="edition-bar">
+      <span>Free private beta · United States</span>
+      <span>Local-first · No account required</span>
+    </div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Orbit home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>ORBIT</span><span class="plus-badge">ABROAD</span>
+      </a>
+      <div class="header-actions">
+        <button class="button button-quiet" id="installButton" type="button" hidden>Install app</button>
+        <button class="button button-quiet" id="feedbackButton" type="button">Feedback</button>
+        <button class="button button-quiet" id="notificationButton" type="button">Enable reminders</button>
+        <button class="button button-dark" id="openFormButton" type="button"><span aria-hidden="true">＋</span> Add task</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-story">
+          <p class="section-number">01 / THE DAILY BRIEF</p>
+          <p class="eyebrow" id="todayLabel"></p>
+          <h1>Your life abroad,<br><em>understood.</em></h1>
+          <p class="hero-copy">Turn unfamiliar U.S. bills, notices, appointments, and renewals into clear tasks—without uploading the document.</p>
+        </div>
+        <aside class="daily-brief">
+          <div class="brief-rule"><span>Today’s briefing</span><span id="briefIssue">No. 001</span></div>
+          <strong id="briefHeadline">Your desk is being prepared.</strong>
+          <p id="briefCopy">Orbit is checking what needs your attention next.</p>
+          <button class="brief-link" id="briefInboxButton" type="button">Open Smart Inbox <span>↘</span></button>
+        </aside>
+      </section>
+
+      <section class="smart-inbox" id="smartInbox">
+        <div class="smart-heading">
+          <div>
+            <p class="section-number inverse">02 / DOCUMENT INTELLIGENCE</p>
+            <p class="eyebrow">SMART INBOX · PRIVATE LOCAL ANALYSIS</p>
+            <h2>Drop the fine print<br><em>on our desk.</em></h2>
+          </div>
+          <span class="local-pill"><i></i> Runs on this device</span>
+        </div>
+
+        <div class="smart-grid">
+          <div class="paste-panel">
+            <label for="inboxText">Paste a bill, letter, email, or appointment notice</label>
+            <div class="document-input">
+              <div class="document-chrome"><span>Untitled notice.txt</span><span>LOCAL</span></div>
+              <textarea id="inboxText" rows="8" placeholder="Example: Your electricity bill of $128.44 is due on September 28, 2026. Account ending 4821."></textarea>
+              <div class="scan-beam" aria-hidden="true"></div>
+            </div>
+            <div class="paste-actions">
+              <label class="example-picker"><span>Example</span><select id="exampleSelect"><option value="utility">Utility bill</option><option value="visa">Visa reminder</option><option value="appointment">Health appointment</option><option value="university">University document</option></select></label>
+              <button class="text-action" id="exampleButton" type="button">Load example</button>
+              <button class="button button-coral" id="analyzeButton" type="button">Find the task <span aria-hidden="true">→</span></button>
+            </div>
+            <p class="smart-privacy">🔒 Pasted text is analyzed in your browser and is not uploaded or saved.</p>
+          </div>
+          <div class="review-panel" id="smartReview" aria-live="polite">
+            <div class="review-empty">
+              <span class="scan-mark" aria-hidden="true">⌁</span>
+              <strong>Ready when you are</strong>
+              <p>Orbit will suggest a task for you to review before anything is added.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Task summary">
+        <article><span class="stat-dot coral"></span><strong id="dueSoonCount">0</strong><p>Due soon</p></article>
+        <article><span class="stat-dot ink"></span><strong id="upcomingCount">0</strong><p>Upcoming</p></article>
+        <article><span class="stat-dot sage"></span><strong id="completedCount">0</strong><p>Completed</p></article>
+      </section>
+
+      <section class="workspace">
+        <div class="section-heading">
+          <div>
+            <p class="section-number">03 / ACTION REGISTER</p>
+            <p class="eyebrow">YOUR ORBIT</p>
+            <h2>What needs your attention</h2>
+          </div>
+          <label class="search-field">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Search tasks" autocomplete="off">
+          </label>
+        </div>
+
+        <div class="controls">
+          <div class="tabs" id="viewTabs" role="tablist" aria-label="Task views">
+            <button class="tab active" data-view="active" role="tab">Active</button>
+            <button class="tab" data-view="today" role="tab">Today</button>
+            <button class="tab" data-view="upcoming" role="tab">Upcoming</button>
+            <button class="tab" data-view="completed" role="tab">Completed</button>
+          </div>
+          <label class="select-wrap">Category
+            <select id="categoryFilter">
+              <option value="all">All</option>
+              <option value="bill">Bills</option>
+              <option value="renewal">Renewals</option>
+              <option value="appointment">Appointments</option>
+              <option value="document">Documents</option>
+            </select>
+          </label>
+          <div class="data-actions">
+            <button class="mini-button" id="exportButton" type="button">Export backup</button>
+            <label class="mini-button import-label">Import backup<input id="importInput" type="file" accept="application/json,.json" hidden></label>
+          </div>
+        </div>
+
+        <div class="task-list" id="taskList" aria-live="polite"></div>
+      </section>
+      <div class="app-trust-footer">
+        <span>Orbit organizes information—it does not provide legal, immigration, financial, or medical advice.</span>
+        <span><button class="footer-button" id="settingsButton" type="button">Settings & safety</button> · <a href="file:///home/caragon/giulio-workspace/orbit-abroad/privacy-preview.html">Privacy & limitations</a> · <a href="file:///home/caragon/giulio-workspace/orbit-abroad/preview.html">About Orbit Abroad</a></span>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="welcomeDialog" class="launch-dialog">
+    <form id="welcomeForm" method="dialog">
+      <p class="section-number">WELCOME / PRIVATE BETA</p>
+      <h2>A calmer desk for life in a new country.</h2>
+      <p class="dialog-lede">Orbit works locally in this browser. Before your first notice, set your defaults and learn what not to paste.</p>
+      <div class="onboarding-grid">
+        <label class="field">Region
+          <select id="regionInput"><option value="US" selected>United States</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="EU">European Union</option><option value="other">Other</option></select>
+        </label>
+        <label class="field">Numeric date format
+          <select id="dateOrderInput"><option value="MDY" selected>MM/DD/YYYY</option><option value="DMY">DD/MM/YYYY</option><option value="YMD">YYYY-MM-DD</option></select>
+        </label>
+      </div>
+      <div class="redaction-card">
+        <strong>Redact before you paste</strong>
+        <p>Keep the wording that explains the action and deadline. Remove:</p>
+        <ul><li>Social Security and full passport numbers</li><li>Bank, card, login, and authentication details</li><li>Full addresses or medical details you do not need in the task</li></ul>
+      </div>
+      <label class="consent-check"><input id="redactionConsent" type="checkbox" required><span>I understand that I should remove sensitive information and review every suggestion.</span></label>
+      <button class="danger-link" id="resetDataButton" type="button">Delete all local Orbit data</button>
+      <div class="dialog-actions"><a class="privacy-link" href="file:///home/caragon/giulio-workspace/orbit-abroad/privacy-preview.html">Read privacy notice</a><button class="button button-dark" type="submit">Set up my desk</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="feedbackDialog" class="launch-dialog feedback-dialog">
+    <form id="feedbackForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">PRIVATE BETA FEEDBACK</p><h2>Help shape Orbit.</h2></div><button class="icon-button" id="closeFeedbackButton" type="button" aria-label="Close">×</button></div>
+      <label class="field">How useful was this session?
+        <select id="feedbackRating"><option value="5">5 — Extremely useful</option><option value="4">4 — Useful</option><option value="3">3 — Somewhat useful</option><option value="2">2 — Not very useful</option><option value="1">1 — Not useful</option></select>
+      </label>
+      <label class="field field-wide">What confused you or felt missing?
+        <textarea id="feedbackText" rows="5" maxlength="1000" required placeholder="The most important thing for us to improve is…"></textarea>
+      </label>
+      <p class="privacy-note">Feedback stays in this form until you download it. Orbit does not send it automatically.</p>
+      <div class="dialog-actions"><a class="privacy-link" href="mailto:gdifranco100@gmail.com?subject=Orbit%20Abroad%20beta%20feedback">Email instead</a><button class="button button-dark" type="submit">Download feedback note</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="taskDialog">
+    <form id="taskForm" method="dialog">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">NEW ITEM</p><h2>Add to your orbit</h2></div>
+        <button class="icon-button" id="closeFormButton" type="button" aria-label="Close">×</button>
+      </div>
+
+      <label class="field field-wide">What needs doing?
+        <input id="titleInput" name="title" maxlength="80" required placeholder="e.g. Renew passport">
+      </label>
+      <div class="field-grid">
+        <label class="field">Category
+          <select id="categoryInput" name="category">
+            <option value="bill">Bill</option>
+            <option value="renewal">Renewal</option>
+            <option value="appointment">Appointment</option>
+            <option value="document">Document</option>
+          </select>
+        </label>
+        <label class="field">Deadline
+          <input id="dateInput" name="date" type="date" required>
+        </label>
+        <label class="field">Time <small>(optional)</small>
+          <input id="timeInput" name="time" type="time">
+        </label>
+        <label class="field">Remind me
+          <select id="reminderInput" name="reminder">
+            <option value="0">At deadline</option>
+            <option value="15">15 minutes before</option>
+            <option value="60">1 hour before</option>
+            <option value="1440" selected>1 day before</option>
+            <option value="10080">1 week before</option>
+            <option value="none">No reminder</option>
+          </select>
+        </label>
+      </div>
+      <label class="field field-wide">Note or reference <small>(optional)</small>
+        <textarea id="notesInput" name="notes" maxlength="240" rows="3" placeholder="Account, location, document name…"></textarea>
+      </label>
+      <p class="privacy-note">🔒 Saved only in this browser on this device.</p>
+      <div class="dialog-actions">
+        <button class="button button-quiet" id="cancelFormButton" type="button">Cancel</button>
+        <button class="button button-dark" type="submit">Add task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  root.LifeAdminCore = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  "use strict";
+
+  const CATEGORIES = ["bill", "renewal", "appointment", "document"];
+
+  function parseDeadline(task) {
+    const time = task.time || "23:59";
+    return new Date(`${task.date}T${time}:00`);
+  }
+
+  function dayKey(value) {
+    const date = value instanceof Date ? value : new Date(value);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  }
+
+  function statusOf(task, now = new Date()) {
+    if (task.completed) return "completed";
+    const deadline = parseDeadline(task);
+    if (dayKey(deadline) === dayKey(now)) return "today";
+    if (deadline.getTime() < now.getTime()) return "overdue";
+    return "upcoming";
+  }
+
+  function daysUntil(task, now = new Date()) {
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const due = parseDeadline(task);
+    const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+    return Math.round((dueDay - today) / 86400000);
+  }
+
+  function sortTasks(tasks) {
+    return [...tasks].sort((a, b) => {
+      if (a.completed !== b.completed) return a.completed ? 1 : -1;
+      return parseDeadline(a) - parseDeadline(b);
+    });
+  }
+
+  function validateTask(task) {
+    const errors = [];
+    if (!task.title || !task.title.trim()) errors.push("Give the task a title.");
+    if (!CATEGORIES.includes(task.category)) errors.push("Choose a valid category.");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(task.date || "") || Number.isNaN(parseDeadline(task).getTime())) errors.push("Choose a valid deadline.");
+    return errors;
+  }
+
+  function filterTasks(tasks, options = {}, now = new Date()) {
+    const view = options.view || "active";
+    const category = options.category || "all";
+    const query = (options.query || "").trim().toLowerCase();
+    return sortTasks(tasks).filter((task) => {
+      const status = statusOf(task, now);
+      if (view === "active" && status === "completed") return false;
+      if (view === "today" && !["today", "overdue"].includes(status)) return false;
+      if (view === "upcoming" && status !== "upcoming") return false;
+      if (view === "completed" && status !== "completed") return false;
+      if (category !== "all" && task.category !== category) return false;
+      if (query && !`${task.title} ${task.notes || ""}`.toLowerCase().includes(query)) return false;
+      return true;
+    });
+  }
+
+  function escapeIcs(value) {
+    return String(value || "").replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
+  }
+
+  function icsDate(date) {
+    return `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}${String(date.getMinutes()).padStart(2, "0")}00`;
+  }
+
+  function buildIcs(task, now = new Date()) {
+    const start = parseDeadline(task);
+    const end = new Date(start.getTime() + 30 * 60000);
+    const reminder = task.reminder === "none" ? null : Math.max(0, Number(task.reminder || 0));
+    const alarm = reminder === null ? "" : `\r\nBEGIN:VALARM\r\nTRIGGER:-PT${reminder}M\r\nACTION:DISPLAY\r\nDESCRIPTION:${escapeIcs(task.title)}\r\nEND:VALARM`;
+    return [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Orbit Life Admin//EN", "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT", `UID:${escapeIcs(task.id)}@orbit.local`, `DTSTAMP:${icsDate(now)}`,
+      `DTSTART:${icsDate(start)}`, `DTEND:${icsDate(end)}`, `SUMMARY:${escapeIcs(task.title)}`,
+      `DESCRIPTION:${escapeIcs(task.notes || `${task.category} task from Orbit`)}`,
+      `${alarm}\r\nEND:VEVENT`, "END:VCALENDAR"
+    ].join("\r\n");
+  }
+
+  return { CATEGORIES, parseDeadline, dayKey, statusOf, daysUntil, sortTasks, validateTask, filterTasks, escapeIcs, buildIcs };
+});
+
+</script>
+  <script>
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  root.SmartInbox = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  "use strict";
+
+  const MONTHS = {
+    january: 0, jan: 0, february: 1, feb: 1, march: 2, mar: 2, april: 3, apr: 3,
+    may: 4, june: 5, jun: 5, july: 6, jul: 6, august: 7, aug: 7,
+    september: 8, sep: 8, sept: 8, october: 9, oct: 9, november: 10, nov: 10,
+    december: 11, dec: 11
+  };
+
+  const CATEGORY_WORDS = {
+    bill: { bill: 5, invoice: 5, payment: 3, pay: 3, balance: 3, amount: 2, utility: 2, electricity: 2, rent: 2, premium: 2 },
+    renewal: { renew: 5, renewal: 5, expires: 4, expiry: 4, expiration: 4, membership: 2, license: 2, licence: 2, passport: 2, subscription: 2 },
+    appointment: { appointment: 6, confirmed: 2, doctor: 3, dentist: 3, clinic: 3, visit: 2, reservation: 2, meeting: 2, consultation: 3 },
+    document: { document: 4, submit: 4, upload: 3, form: 3, paperwork: 4, certificate: 3, proof: 3, application: 2, signature: 2, sign: 2 }
+  };
+
+  function pad(number) { return String(number).padStart(2, "0"); }
+  function dateKey(date) { return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`; }
+  function validDate(year, month, day) {
+    const date = new Date(year, month, day);
+    return date.getFullYear() === year && date.getMonth() === month && date.getDate() === day ? date : null;
+  }
+  function inferredYear(month, day, reference) {
+    let year = reference.getFullYear();
+    const candidate = validDate(year, month, day);
+    const yesterday = new Date(reference); yesterday.setDate(yesterday.getDate() - 1);
+    if (candidate && candidate < yesterday) year += 1;
+    return year;
+  }
+
+  function categoryFrom(text) {
+    const words = text.toLowerCase().match(/[a-z]+/g) || [];
+    const scores = Object.fromEntries(Object.keys(CATEGORY_WORDS).map((category) => [category, 0]));
+    words.forEach((word) => {
+      Object.entries(CATEGORY_WORDS).forEach(([category, weights]) => { scores[category] += weights[word] || 0; });
+    });
+    const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    return { category: ranked[0][1] ? ranked[0][0] : "document", score: ranked[0][1], margin: ranked[0][1] - ranked[1][1] };
+  }
+
+  function contextScore(text, index) {
+    const context = text.slice(Math.max(0, index - 50), index).toLowerCase();
+    let score = 0;
+    if (/\b(due|deadline|pay by|submit by|renew by|before|no later than)\b/.test(context)) score += 8;
+    if (/\b(on|for|expires?|expiration|appointment|scheduled)\b/.test(context)) score += 3;
+    return score;
+  }
+
+  function dateCandidates(text, reference, dateOrder = "MDY") {
+    const candidates = [];
+    const add = (match, date, label) => {
+      if (date) candidates.push({ date, raw: match[0], index: match.index, score: contextScore(text, match.index), label });
+    };
+    const iso = /\b(20\d{2})-(\d{1,2})-(\d{1,2})\b/g;
+    let match;
+    while ((match = iso.exec(text))) add(match, validDate(Number(match[1]), Number(match[2]) - 1, Number(match[3])), "date");
+
+    const numeric = /\b(\d{1,2})[\/.](\d{1,2})[\/.](20\d{2}|\d{2})\b/g;
+    while ((match = numeric.exec(text))) {
+      const first = Number(match[1]); const second = Number(match[2]);
+      const year = Number(match[3]) < 100 ? 2000 + Number(match[3]) : Number(match[3]);
+      const dayFirst = dateOrder === "DMY" || first > 12;
+      const month = dayFirst ? second - 1 : first - 1;
+      const day = dayFirst ? first : second;
+      add(match, validDate(year, month, day), "date");
+    }
+
+    const monthFirst = new RegExp(`\\b(${Object.keys(MONTHS).join("|")})\\s+(\\d{1,2})(?:st|nd|rd|th)?(?:,?\\s+(20\\d{2}))?\\b`, "gi");
+    while ((match = monthFirst.exec(text))) {
+      const month = MONTHS[match[1].toLowerCase()]; const day = Number(match[2]);
+      add(match, validDate(match[3] ? Number(match[3]) : inferredYear(month, day, reference), month, day), "date");
+    }
+
+    const dayFirst = new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+(${Object.keys(MONTHS).join("|")})(?:,?\\s+(20\\d{2}))?\\b`, "gi");
+    while ((match = dayFirst.exec(text))) {
+      const month = MONTHS[match[2].toLowerCase()]; const day = Number(match[1]);
+      add(match, validDate(match[3] ? Number(match[3]) : inferredYear(month, day, reference), month, day), "date");
+    }
+
+    const lower = text.toLowerCase();
+    for (const [word, offset] of [["today", 0], ["tomorrow", 1]]) {
+      const index = lower.indexOf(word);
+      if (index >= 0) { const date = new Date(reference); date.setHours(0, 0, 0, 0); date.setDate(date.getDate() + offset); candidates.push({ date, raw: word, index, score: contextScore(text, index) + 2, label: "relative date" }); }
+    }
+    const relative = /\bin\s+(\d{1,3})\s+days?\b/i.exec(text);
+    if (relative) { const date = new Date(reference); date.setHours(0, 0, 0, 0); date.setDate(date.getDate() + Number(relative[1])); candidates.push({ date, raw: relative[0], index: relative.index, score: contextScore(text, relative.index) + 2, label: "relative date" }); }
+    return candidates.sort((a, b) => b.score - a.score || a.index - b.index);
+  }
+
+  function extractTime(text) {
+    const match = /\b(?:at\s+)?(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)\b/i.exec(text) || /\b(?:at\s+)([01]?\d|2[0-3]):([0-5]\d)\b/i.exec(text);
+    if (!match) return null;
+    let hour = Number(match[1]); const minute = Number(match[2] || 0); const meridiem = (match[3] || "").toLowerCase();
+    if (meridiem.startsWith("p") && hour < 12) hour += 12;
+    if (meridiem.startsWith("a") && hour === 12) hour = 0;
+    if (hour > 23 || minute > 59) return null;
+    return { value: `${pad(hour)}:${pad(minute)}`, raw: match[0].trim() };
+  }
+
+  function extractAmount(text) {
+    const match = /(?:\b(?:USD|EUR|GBP)\s*|[$€£]\s*)\d{1,3}(?:,\d{3})*(?:\.\d{2})?\b/i.exec(text);
+    return match ? match[0].trim() : "";
+  }
+
+  function extractReference(text) {
+    const patterns = [
+      /\b(?:invoice|confirmation|reference|ref|policy)\s*(?:number|no\.?|#|:)?\s*([A-Z0-9-]{4,})\b/i,
+      /\baccount\s+(?:ending\s+in\s+|ending\s+|#)?([A-Z0-9-]{4,})\b/i
+    ];
+    for (const pattern of patterns) { const match = pattern.exec(text); if (match) return match[1]; }
+    return "";
+  }
+
+  function extractTitle(text, category) {
+    const lines = text.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+    const subject = lines.find((line) => /^subject\s*:/i.test(line));
+    if (subject) return subject.replace(/^subject\s*:\s*/i, "").slice(0, 80);
+    let first = (lines[0] || "New life admin task").replace(/^(hello|hi|dear)\b[^,]*,?\s*/i, "");
+    first = first.split(/\b(?:is due|due on|due by|for (?:january|february|march|april|may|june|july|august|september|october|november|december)|on \d|at \d)\b/i)[0];
+    first = first.replace(/[.!,:;-]+$/, "").trim();
+    if (first.length >= 5 && first.length <= 80) return first;
+    return ({ bill: "Review and pay bill", renewal: "Complete renewal", appointment: "Upcoming appointment", document: "Submit required document" })[category];
+  }
+
+  function analyze(text, referenceDate = new Date(), options = {}) {
+    const clean = String(text || "").replace(/\r/g, "").trim();
+    if (!clean) return { error: "Paste a notice or message first." };
+    const categoryResult = categoryFrom(clean);
+    const dates = dateCandidates(clean, referenceDate, options.dateOrder || "MDY");
+    const selectedDate = dates[0] || null;
+    const time = extractTime(clean);
+    const amount = extractAmount(clean);
+    const reference = extractReference(clean);
+    const category = categoryResult.category;
+    const title = extractTitle(clean, category);
+    const findings = [];
+    findings.push({ type: "category", label: "Category", value: category });
+    if (selectedDate) findings.push({ type: "date", label: "Deadline", value: selectedDate.raw });
+    if (time) findings.push({ type: "time", label: "Time", value: time.raw });
+    if (amount) findings.push({ type: "amount", label: "Amount", value: amount });
+    if (reference) findings.push({ type: "reference", label: "Reference", value: reference });
+    let confidence = 28;
+    confidence += Math.min(22, categoryResult.score * 2 + categoryResult.margin);
+    if (selectedDate) confidence += 30;
+    if (time) confidence += 7;
+    if (amount || reference) confidence += 8;
+    confidence = Math.min(96, confidence);
+    const detailParts = [];
+    if (amount) detailParts.push(`Amount: ${amount}`);
+    if (reference) detailParts.push(`Reference: ${reference}`);
+    return {
+      title, category, date: selectedDate ? dateKey(selectedDate.date) : "", time: time ? time.value : "",
+      amount, reference, notes: detailParts.join(" · "), confidence, findings,
+      needsDate: !selectedDate
+    };
+  }
+
+  return { analyze, categoryFrom, dateCandidates, extractTime, extractAmount, extractReference, extractTitle, dateKey };
+});
+
+</script>
+  <script>
+"use strict";
+
+const Core = window.LifeAdminCore;
+const Inbox = window.SmartInbox;
+const STORAGE_KEY = "orbit-abroad-tasks-v1";
+const SETTINGS_KEY = "orbit-abroad-settings-v1";
+const state = { tasks: [], view: "active", category: "all", query: "" };
+let settings = { region: "US", dateOrder: "MDY", onboarded: false };
+let deferredInstall = null;
+const experience = { analysisRun: 0, analysisState: "idle" };
+window.__orbitPlusExperience = experience;
+window.__orbitAbroadExperience = experience;
+
+const $ = (selector) => document.querySelector(selector);
+const elements = {
+  list: $("#taskList"), dialog: $("#taskDialog"), form: $("#taskForm"),
+  title: $("#titleInput"), category: $("#categoryInput"), date: $("#dateInput"),
+  time: $("#timeInput"), reminder: $("#reminderInput"), notes: $("#notesInput"),
+  search: $("#searchInput"), categoryFilter: $("#categoryFilter"), tabs: $("#viewTabs"),
+  toast: $("#toast"), notificationButton: $("#notificationButton"),
+  inboxText: $("#inboxText"), smartReview: $("#smartReview")
+};
+
+const EXAMPLES = {
+  utility: "Subject: Electricity bill reminder\nYour electricity bill of $128.44 is due in 14 days. Please reference account ending 4821.",
+  visa: "Subject: Visa renewal reminder\nYour visa renewal documents are due in 30 days. Reference VISA-DEMO. Review official government guidance before taking action.",
+  appointment: "Subject: Clinic appointment confirmed\nYour appointment with Dr. Chen is tomorrow at 10:30 AM. Confirmation DEMO123.",
+  university: "Subject: Enrollment document required\nPlease submit the signed enrollment form in 10 days. Reference FORM-DEMO."
+};
+
+function toDateInput(date) {
+  return Core.dayKey(date);
+}
+
+function relativeDate(days, hour) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return { date: toDateInput(date), time: hour || "" };
+}
+
+function sampleTasks() {
+  const energy = relativeDate(2);
+  const dentist = relativeDate(7, "10:30");
+  const passport = relativeDate(38);
+  const insurance = relativeDate(-1);
+  return [
+    { id: crypto.randomUUID(), title: "Pay electricity bill", category: "bill", ...energy, reminder: "1440", notes: "Check this month’s meter reading", completed: false },
+    { id: crypto.randomUUID(), title: "Dentist check-up", category: "appointment", ...dentist, reminder: "60", notes: "Bring insurance card", completed: false },
+    { id: crypto.randomUUID(), title: "Renew passport", category: "renewal", ...passport, reminder: "10080", notes: "Prepare a new passport photo", completed: false },
+    { id: crypto.randomUUID(), title: "File insurance letter", category: "document", ...insurance, reminder: "0", notes: "Save the policy confirmation PDF", completed: false }
+  ];
+}
+
+function loadTasks() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    state.tasks = Array.isArray(saved) ? saved : sampleTasks();
+  } catch (_) {
+    state.tasks = sampleTasks();
+  }
+  saveTasks();
+}
+
+function saveTasks() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.tasks));
+}
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    if (saved && typeof saved === "object") settings = { ...settings, ...saved };
+  } catch (_) { /* Keep safe defaults. */ }
+}
+
+function saveSettings() {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
+}
+
+function categoryName(category) {
+  return ({ bill: "Bill", renewal: "Renewal", appointment: "Appointment", document: "Document" })[category] || category;
+}
+
+function dueText(task, now = new Date()) {
+  const status = Core.statusOf(task, now);
+  const days = Core.daysUntil(task, now);
+  if (status === "overdue") return { text: `${Math.abs(days)} day${Math.abs(days) === 1 ? "" : "s"} overdue`, className: "overdue" };
+  if (status === "today") return { text: task.time ? `Today at ${formatTime(task.time)}` : "Due today", className: "soon" };
+  if (days === 1) return { text: "Due tomorrow", className: "soon" };
+  const date = Core.parseDeadline(task);
+  return { text: `Due ${date.toLocaleDateString(undefined, { month: "short", day: "numeric" })}${task.time ? ` · ${formatTime(task.time)}` : ""}`, className: days <= 7 ? "soon" : "" };
+}
+
+function formatTime(time) {
+  const [hour, minute] = time.split(":").map(Number);
+  return new Date(2000, 0, 1, hour, minute).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
+
+function render() {
+  const now = new Date();
+  const tasks = Core.filterTasks(state.tasks, state, now);
+  elements.list.innerHTML = tasks.length ? tasks.map((task, index) => {
+    const due = dueText(task, now);
+    return `<article class="task-card ${task.completed ? "is-complete" : ""}" style="animation-delay:${Math.min(index * 35, 210)}ms">
+      <button class="check-button" data-action="toggle" data-id="${task.id}" aria-label="${task.completed ? "Mark active" : "Mark complete"}">✓</button>
+      <div class="task-main">
+        <div class="task-topline"><span class="category-pill">${categoryName(task.category)}</span><h3 class="task-title">${escapeHtml(task.title)}</h3></div>
+        ${task.notes ? `<p class="task-note">${escapeHtml(task.notes)}</p>` : ""}
+      </div>
+      <div class="task-side">
+        <span class="due-label ${due.className}">${task.completed ? "Completed" : due.text}</span>
+        <div class="task-actions">
+          ${!task.completed ? `<button class="mini-button" data-action="calendar" data-id="${task.id}">Add to calendar</button>` : ""}
+          <button class="mini-button" data-action="delete" data-id="${task.id}">Delete</button>
+        </div>
+      </div>
+    </article>`;
+  }).join("") : `<div class="empty-state"><strong>Clear skies.</strong><span>No tasks match this view.</span></div>`;
+
+  const active = state.tasks.filter((task) => !task.completed);
+  $("#dueSoonCount").textContent = active.filter((task) => Core.daysUntil(task, now) <= 7).length;
+  $("#upcomingCount").textContent = active.filter((task) => Core.statusOf(task, now) === "upcoming").length;
+  $("#completedCount").textContent = state.tasks.filter((task) => task.completed).length;
+  const priority = Core.sortTasks(active)[0];
+  $("#briefIssue").textContent = `No. ${String(active.length).padStart(3, "0")}`;
+  if (priority) {
+    const due = dueText(priority, now);
+    $("#briefHeadline").textContent = priority.title;
+    $("#briefCopy").textContent = `${due.text}. ${active.length === 1 ? "It is the only active item on your desk." : `${active.length - 1} more active items follow.`}`;
+  } else {
+    $("#briefHeadline").textContent = "The desk is clear.";
+    $("#briefCopy").textContent = "Nothing needs your attention right now.";
+  }
+}
+
+function renderSmartReview(result) {
+  if (result.error) { showToast(result.error); elements.inboxText.focus(); return; }
+  const findings = result.findings.map((finding) => `<span class="finding-chip" title="${escapeHtml(finding.label)}">${escapeHtml(finding.value)}</span>`).join("");
+  const categories = ["bill", "renewal", "appointment", "document"].map((category) => `<option value="${category}" ${category === result.category ? "selected" : ""}>${categoryName(category)}</option>`).join("");
+  elements.smartReview.classList.add("has-result");
+  elements.smartReview.innerHTML = `
+    <div class="review-topline">
+      <p>Review suggestion</p>
+      <span class="confidence"><span class="confidence-meter"><i style="width:${result.confidence}%"></i></span>${result.confidence}% confidence</span>
+    </div>
+    <div class="finding-list" aria-label="Detected details">${findings}</div>
+    <div class="smart-fields">
+      <label class="smart-field wide">Task title<input id="smartTitle" maxlength="80" value="${escapeHtml(result.title)}"></label>
+      <label class="smart-field">Category<select id="smartCategory">${categories}</select></label>
+      <label class="smart-field">Deadline<input id="smartDate" type="date" value="${escapeHtml(result.date)}"></label>
+      <label class="smart-field">Time<input id="smartTime" type="time" value="${escapeHtml(result.time)}"></label>
+      <label class="smart-field">Reminder<select id="smartReminder"><option value="60" ${result.category === "appointment" ? "selected" : ""}>1 hour before</option><option value="1440" ${result.category !== "appointment" ? "selected" : ""}>1 day before</option><option value="10080">1 week before</option><option value="none">No reminder</option></select></label>
+      <label class="smart-field wide">Useful details<input id="smartNotes" maxlength="240" value="${escapeHtml(result.notes)}" placeholder="Add a reference or note"></label>
+    </div>
+    ${result.needsDate ? '<p class="smart-warning">Orbit could not find a deadline. Please choose one before saving.</p>' : ""}
+    <div class="review-actions"><small>Nothing is added until you confirm.</small><button class="button button-coral" id="smartSaveButton" type="button">Create task</button></div>`;
+  $("#smartSaveButton").addEventListener("click", saveSmartTask);
+  experience.analysisState = "review";
+}
+
+function pause(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+async function analyzeInbox() {
+  const result = Inbox.analyze(elements.inboxText.value, new Date(), { dateOrder: settings.dateOrder });
+  if (result.error) { renderSmartReview(result); return; }
+  const run = ++experience.analysisRun;
+  const steps = ["Reading document structure", "Locating dates and amounts", "Classifying the request", "Preparing your review"];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const analyzeButton = $("#analyzeButton");
+  analyzeButton.disabled = true;
+  analyzeButton.innerHTML = "Reading… <span aria-hidden=\"true\">↗</span>";
+  $("#smartInbox").classList.add("is-scanning");
+  elements.smartReview.classList.remove("has-result");
+  experience.analysisState = "scanning";
+  elements.smartReview.innerHTML = `<div class="analysis-stage">
+    <div class="analysis-kicker"><i></i> Local analysis in progress</div>
+    <strong>Reading between the lines.</strong>
+    <div class="analysis-steps">${steps.map((step, index) => `<div class="analysis-step" data-step="${index}"><span>0${index + 1}</span><span>${step}</span></div>`).join("")}</div>
+    <div class="analysis-progress"><i></i></div>
+  </div>`;
+
+  if (!reducedMotion) {
+    for (let index = 0; index < steps.length; index += 1) {
+      if (run !== experience.analysisRun) return;
+      const step = elements.smartReview.querySelector(`[data-step="${index}"]`);
+      step.classList.add("active");
+      elements.smartReview.querySelector(".analysis-progress i").style.width = `${(index + 1) * 25}%`;
+      await pause(310);
+      step.classList.remove("active");
+      step.classList.add("done");
+    }
+    await pause(180);
+  }
+  if (run !== experience.analysisRun) return;
+  $("#smartInbox").classList.remove("is-scanning");
+  analyzeButton.disabled = false;
+  analyzeButton.innerHTML = "Find the task <span aria-hidden=\"true\">→</span>";
+  renderSmartReview(result);
+}
+
+function saveSmartTask() {
+  const task = {
+    id: crypto.randomUUID(), title: $("#smartTitle").value.trim(), category: $("#smartCategory").value,
+    date: $("#smartDate").value, time: $("#smartTime").value, reminder: $("#smartReminder").value,
+    notes: $("#smartNotes").value.trim(), completed: false, createdAt: new Date().toISOString(), source: "smart-inbox"
+  };
+  const errors = Core.validateTask(task);
+  if (errors.length) { showToast(errors[0]); return; }
+  state.tasks.push(task);
+  saveTasks(); render();
+  elements.inboxText.value = "";
+  elements.smartReview.innerHTML = `<div class="review-empty"><span class="scan-mark" aria-hidden="true">✓</span><strong>Task created</strong><p>Orbit saved the reviewed details. The original pasted text was discarded.</p></div>`;
+  elements.smartReview.classList.remove("has-result");
+  experience.analysisState = "complete";
+  showToast("Smart Inbox task added");
+  document.querySelector(".workspace").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function addTask() {
+  const task = {
+    id: crypto.randomUUID(), title: elements.title.value.trim(), category: elements.category.value,
+    date: elements.date.value, time: elements.time.value, reminder: elements.reminder.value,
+    notes: elements.notes.value.trim(), completed: false, createdAt: new Date().toISOString()
+  };
+  const errors = Core.validateTask(task);
+  if (errors.length) { showToast(errors[0]); return; }
+  state.tasks.push(task);
+  saveTasks(); render(); elements.dialog.close(); elements.form.reset(); setDefaultDate();
+  showToast("Task added to your orbit");
+}
+
+function setDefaultDate() {
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  elements.date.value = toDateInput(tomorrow);
+  elements.reminder.value = "1440";
+}
+
+function showToast(message) {
+  elements.toast.textContent = message;
+  elements.toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => elements.toast.classList.remove("show"), 2400);
+}
+
+function downloadCalendar(task) {
+  const blob = new Blob([Core.buildIcs(task)], { type: "text/calendar;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${task.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "orbit-task"}.ics`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+  showToast("Calendar reminder downloaded");
+}
+
+function downloadFile(filename, content, type = "application/json") {
+  const blob = new Blob([content], { type });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 0);
+}
+
+function exportBackup() {
+  const payload = { product: "Orbit Abroad", version: 1, exportedAt: new Date().toISOString(), settings, tasks: state.tasks };
+  downloadFile(`orbit-abroad-backup-${Core.dayKey(new Date())}.json`, JSON.stringify(payload, null, 2));
+  showToast("Private backup downloaded");
+}
+
+async function importBackup(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  try {
+    const payload = JSON.parse(await file.text());
+    if (!payload || payload.product !== "Orbit Abroad" || !Array.isArray(payload.tasks)) throw new Error("Not an Orbit Abroad backup.");
+    if (payload.tasks.some((task) => Core.validateTask(task).length)) throw new Error("The backup contains invalid tasks.");
+    state.tasks = payload.tasks;
+    if (payload.settings && typeof payload.settings === "object") settings = { ...settings, ...payload.settings, onboarded: true };
+    saveTasks(); saveSettings(); render();
+    showToast(`${state.tasks.length} tasks restored`);
+  } catch (error) {
+    showToast(error.message || "Could not import that backup");
+  } finally {
+    event.target.value = "";
+  }
+}
+
+function showWelcome() {
+  $("#regionInput").value = settings.region;
+  $("#dateOrderInput").value = settings.dateOrder;
+  $("#redactionConsent").checked = false;
+  $("#welcomeDialog").showModal();
+}
+
+function saveOnboarding() {
+  settings = { region: $("#regionInput").value, dateOrder: $("#dateOrderInput").value, onboarded: true };
+  saveSettings();
+  showToast("Your private desk is ready");
+}
+
+function resetLocalData() {
+  if (!window.confirm("Delete every Orbit Abroad task and setting from this browser? This cannot be undone.")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(SETTINGS_KEY);
+  window.location.reload();
+}
+
+function downloadFeedback() {
+  const rating = $("#feedbackRating").value;
+  const feedback = $("#feedbackText").value.trim();
+  const note = `Orbit Abroad private beta feedback\nDate: ${new Date().toLocaleDateString()}\nUsefulness: ${rating}/5\n\nWhat confused me or felt missing:\n${feedback}\n`;
+  downloadFile(`orbit-abroad-feedback-${Core.dayKey(new Date())}.txt`, note, "text/plain;charset=utf-8");
+  $("#feedbackDialog").close();
+  $("#feedbackForm").reset();
+  showToast("Feedback note downloaded—thank you");
+}
+
+async function enableNotifications() {
+  if (!("Notification" in window)) { showToast("Notifications are not supported here"); return; }
+  const permission = await Notification.requestPermission();
+  updateNotificationButton();
+  showToast(permission === "granted" ? "Reminders are on while Orbit is open" : "Notification permission was not enabled");
+  if (permission === "granted") checkReminders();
+}
+
+function updateNotificationButton() {
+  if (!("Notification" in window)) { elements.notificationButton.hidden = true; return; }
+  elements.notificationButton.textContent = Notification.permission === "granted" ? "Reminders enabled" : "Enable reminders";
+}
+
+function checkReminders() {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  const now = new Date();
+  let changed = false;
+  state.tasks.forEach((task) => {
+    if (task.completed || task.reminder === "none") return;
+    const reminderTime = Core.parseDeadline(task).getTime() - Number(task.reminder || 0) * 60000;
+    const key = `${task.date}-${task.time}-${task.reminder}`;
+    if (now.getTime() >= reminderTime && now.getTime() < Core.parseDeadline(task).getTime() + 3600000 && task.notifiedKey !== key) {
+      new Notification(`Orbit reminder: ${task.title}`, { body: dueText(task, now).text, tag: task.id });
+      task.notifiedKey = key; changed = true;
+    }
+  });
+  if (changed) saveTasks();
+}
+
+$("#todayLabel").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+$("#openFormButton").addEventListener("click", () => { elements.dialog.showModal(); setTimeout(() => elements.title.focus(), 50); });
+$("#closeFormButton").addEventListener("click", () => elements.dialog.close());
+$("#cancelFormButton").addEventListener("click", () => elements.dialog.close());
+elements.form.addEventListener("submit", (event) => { event.preventDefault(); addTask(); });
+elements.search.addEventListener("input", () => { state.query = elements.search.value; render(); });
+elements.categoryFilter.addEventListener("change", () => { state.category = elements.categoryFilter.value; render(); });
+elements.tabs.addEventListener("click", (event) => {
+  const tab = event.target.closest("[data-view]"); if (!tab) return;
+  state.view = tab.dataset.view;
+  elements.tabs.querySelectorAll(".tab").forEach((item) => item.classList.toggle("active", item === tab));
+  render();
+});
+elements.list.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-action]"); if (!button) return;
+  const task = state.tasks.find((item) => item.id === button.dataset.id); if (!task) return;
+  if (button.dataset.action === "toggle") { task.completed = !task.completed; saveTasks(); render(); showToast(task.completed ? "Nicely done" : "Task restored"); }
+  if (button.dataset.action === "delete" && window.confirm(`Delete “${task.title}”?`)) { state.tasks = state.tasks.filter((item) => item.id !== task.id); saveTasks(); render(); showToast("Task deleted"); }
+  if (button.dataset.action === "calendar") downloadCalendar(task);
+});
+elements.notificationButton.addEventListener("click", enableNotifications);
+$("#analyzeButton").addEventListener("click", analyzeInbox);
+$("#exampleButton").addEventListener("click", () => {
+  elements.inboxText.value = EXAMPLES[$("#exampleSelect").value];
+  analyzeInbox();
+});
+$("#briefInboxButton").addEventListener("click", () => {
+  $("#smartInbox").scrollIntoView({ behavior: "smooth", block: "start" });
+  setTimeout(() => elements.inboxText.focus(), 450);
+});
+$("#welcomeForm").addEventListener("submit", saveOnboarding);
+$("#settingsButton").addEventListener("click", showWelcome);
+$("#resetDataButton").addEventListener("click", resetLocalData);
+$("#feedbackButton").addEventListener("click", () => $("#feedbackDialog").showModal());
+$("#closeFeedbackButton").addEventListener("click", () => $("#feedbackDialog").close());
+$("#feedbackForm").addEventListener("submit", (event) => { event.preventDefault(); downloadFeedback(); });
+$("#exportButton").addEventListener("click", exportBackup);
+$("#importInput").addEventListener("change", importBackup);
+$("#installButton").addEventListener("click", async () => {
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  await deferredInstall.userChoice;
+  deferredInstall = null;
+  $("#installButton").hidden = true;
+});
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstall = event;
+  $("#installButton").hidden = false;
+});
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("service-worker.js").catch(() => {}));
+}
+
+loadSettings(); loadTasks(); setDefaultDate(); updateNotificationButton(); render(); checkReminders();
+if (!settings.onboarded) setTimeout(showWelcome, 250);
+setInterval(checkReminders, 30000);
+
+</script>
+</body>
+</html>

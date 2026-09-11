@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /preview.html
+Disallow: /app-preview.html
+Disallow: /privacy-preview.html
+
+Sitemap: https://gdifranco1.github.io/orbit-abroad/sitemap.xml
