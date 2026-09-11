@@ -125,6 +125,11 @@ h1 em { color: var(--coral); font-weight: 500; }
 .search-field { display: flex; align-items: center; gap: 7px; width: 230px; padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--muted); }
 .search-field input { width: 100%; border: 0; outline: 0; background: transparent; }
 .controls { margin-top: 38px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.sample-notice { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 28px; padding: 14px 16px; border-left: 4px solid var(--coral); background: var(--paper); }
+.sample-notice div { display: grid; gap: 3px; }
+.sample-notice strong { font-family: Georgia, serif; font-size: 17px; font-weight: 500; }
+.sample-notice span { color: var(--muted); font-size: 11px; line-height: 1.45; }
+.sample-notice .mini-button { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--line); }
 .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
 .tab { padding: 8px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; }
 .tab:hover { background: var(--paper); }
@@ -144,6 +149,7 @@ h1 em { color: var(--coral); font-weight: 500; }
 .task-main { min-width: 0; }
 .task-topline { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .category-pill { padding: 4px 8px; border-radius: 999px; background: var(--paper); color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.sample-pill { padding: 4px 7px; color: #9f4435; background: var(--coral-soft); font-size: 8px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
 .task-title { margin: 0; font-size: 15px; font-weight: 780; overflow-wrap: anywhere; }
 .task-note { margin: 5px 0 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .task-side { min-width: 135px; text-align: right; }
@@ -161,7 +167,7 @@ h1 em { color: var(--coral); font-weight: 500; }
 #taskDialog::backdrop { background: rgba(23,33,29,.48); backdrop-filter: blur(3px); }
 #taskForm { padding: 31px; }
 .dialog-heading { display: flex; align-items: start; justify-content: space-between; margin-bottom: 27px; }
-.icon-button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font-size: 22px; line-height: 1; }
+.icon-button { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font-size: 22px; line-height: 1; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .field { display: grid; gap: 7px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
 .field-wide { margin-bottom: 15px; }
@@ -282,7 +288,8 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
   .edition-bar { display: none; }
   .topbar { height: 72px; }
   .header-actions .button-quiet { display: none; }
-  .header-actions #feedbackButton { display: block; padding: 8px; border: 0; }
+  .brand { min-height: 44px; }
+  .header-actions #feedbackButton { display: block; min-height: 44px; padding: 10px 12px; border: 0; }
   .hero { min-height: 0; grid-template-columns: 1fr; gap: 46px; padding: 53px 2% 43px; }
   h1 { font-size: clamp(54px, 16vw, 74px); }
   .hero-copy { padding-left: 0; }
@@ -302,6 +309,7 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
   .section-heading { align-items: start; flex-direction: column; }
   .search-field { width: 100%; }
   .controls { align-items: start; flex-direction: column; gap: 13px; }
+  .sample-notice { align-items: start; flex-direction: column; }
   .data-actions { margin-left: 0; }
   .task-card { grid-template-columns: auto minmax(0,1fr); gap: 13px; }
   .task-side { grid-column: 2; text-align: left; min-width: 0; }
@@ -324,7 +332,7 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
 <body>
   <div class="app-shell">
     <div class="edition-bar">
-      <span>Free private beta · United States</span>
+      <span>Free beta · United States</span>
       <span>Local-first · No account required</span>
     </div>
     <header class="topbar">
@@ -410,6 +418,11 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
           </label>
         </div>
 
+        <div class="sample-notice" id="sampleNotice" hidden>
+          <div><strong>Sample desk</strong><span>These demonstration tasks are not personal data. Keep them for a tour or remove them to start fresh.</span></div>
+          <button class="mini-button" id="clearSamplesButton" type="button">Remove sample tasks</button>
+        </div>
+
         <div class="controls">
           <div class="tabs" id="viewTabs" role="tablist" aria-label="Task views">
             <button class="tab active" data-view="active" role="tab">Active</button>
@@ -441,11 +454,11 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
     </main>
   </div>
 
-  <dialog id="welcomeDialog" class="launch-dialog">
+  <dialog id="welcomeDialog" class="launch-dialog" aria-labelledby="welcomeTitle" aria-describedby="welcomeDescription">
     <form id="welcomeForm" method="dialog">
-      <p class="section-number">WELCOME / PRIVATE BETA</p>
-      <h2>A calmer desk for life in a new country.</h2>
-      <p class="dialog-lede">Orbit works locally in this browser. Before your first notice, set your defaults and learn what not to paste.</p>
+      <p class="section-number">WELCOME / FREE BETA</p>
+      <h2 id="welcomeTitle">A calmer desk for life in a new country.</h2>
+      <p class="dialog-lede" id="welcomeDescription">Orbit works locally in this browser. Before your first notice, set your defaults and learn what not to paste.</p>
       <div class="onboarding-grid">
         <label class="field">Region
           <select id="regionInput"><option value="US" selected>United States</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="EU">European Union</option><option value="other">Other</option></select>
@@ -465,24 +478,24 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
     </form>
   </dialog>
 
-  <dialog id="feedbackDialog" class="launch-dialog feedback-dialog">
+  <dialog id="feedbackDialog" class="launch-dialog feedback-dialog" aria-labelledby="feedbackTitle" aria-describedby="feedbackDescription">
     <form id="feedbackForm" method="dialog">
-      <div class="dialog-heading"><div><p class="eyebrow">PRIVATE BETA FEEDBACK</p><h2>Help shape Orbit.</h2></div><button class="icon-button" id="closeFeedbackButton" type="button" aria-label="Close">×</button></div>
+      <div class="dialog-heading"><div><p class="eyebrow">FREE BETA FEEDBACK</p><h2 id="feedbackTitle">Help shape Orbit.</h2></div><button class="icon-button" id="closeFeedbackButton" type="button" aria-label="Close feedback">×</button></div>
       <label class="field">How useful was this session?
         <select id="feedbackRating"><option value="5">5 — Extremely useful</option><option value="4">4 — Useful</option><option value="3">3 — Somewhat useful</option><option value="2">2 — Not very useful</option><option value="1">1 — Not useful</option></select>
       </label>
       <label class="field field-wide">What confused you or felt missing?
         <textarea id="feedbackText" rows="5" maxlength="1000" required placeholder="The most important thing for us to improve is…"></textarea>
       </label>
-      <p class="privacy-note">Feedback stays in this form until you download it. Orbit does not send it automatically.</p>
-      <div class="dialog-actions"><a class="privacy-link" href="mailto:gdifranco100@gmail.com?subject=Orbit%20Abroad%20beta%20feedback">Email instead</a><button class="button button-dark" type="submit">Download feedback note</button></div>
+      <p class="privacy-note" id="feedbackDescription">Continue to review a prefilled public GitHub issue. Nothing is posted automatically. Do not include personal or sensitive information.</p>
+      <div class="dialog-actions"><a class="privacy-link" href="https://github.com/gdifranco1/orbit-abroad/issues" target="_blank" rel="noopener noreferrer">View public feedback</a><button class="button button-dark" type="submit">Review on GitHub</button></div>
     </form>
   </dialog>
 
-  <dialog id="taskDialog">
+  <dialog id="taskDialog" aria-labelledby="taskDialogTitle" aria-describedby="taskDialogDescription">
     <form id="taskForm" method="dialog">
       <div class="dialog-heading">
-        <div><p class="eyebrow">NEW ITEM</p><h2>Add to your orbit</h2></div>
+        <div><p class="eyebrow">NEW ITEM</p><h2 id="taskDialogTitle">Add to your orbit</h2></div>
         <button class="icon-button" id="closeFormButton" type="button" aria-label="Close">×</button>
       </div>
 
@@ -518,7 +531,7 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
       <label class="field field-wide">Note or reference <small>(optional)</small>
         <textarea id="notesInput" name="notes" maxlength="240" rows="3" placeholder="Account, location, document name…"></textarea>
       </label>
-      <p class="privacy-note">🔒 Saved only in this browser on this device.</p>
+      <p class="privacy-note" id="taskDialogDescription">🔒 Saved only in this browser on this device.</p>
       <div class="dialog-actions">
         <button class="button button-quiet" id="cancelFormButton" type="button">Cancel</button>
         <button class="button button-dark" type="submit">Add task</button>
@@ -731,10 +744,14 @@ h1 { max-width: 800px; font-size: clamp(62px, 8.2vw, 106px); line-height: .86; }
 
   function extractReference(text) {
     const patterns = [
-      /\b(?:invoice|confirmation|reference|ref|policy)\s*(?:number|no\.?|#|:)?\s*([A-Z0-9-]{4,})\b/i,
-      /\baccount\s+(?:ending\s+in\s+|ending\s+|#)?([A-Z0-9-]{4,})\b/i
+      /\baccount\s+(?:ending\s+(?:in\s+)?|number\s*(?:no\.?|#|:)?\s*|#\s*)?([A-Z0-9-]{4,})\b/i,
+      /\b(?:invoice|confirmation|reference|ref|policy)\s*(?:number|no\.?|#|:)?\s*([A-Z0-9-]{4,})\b/i
     ];
-    for (const pattern of patterns) { const match = pattern.exec(text); if (match) return match[1]; }
+    const genericWords = /^(?:account|ending|number|please|details)$/i;
+    for (const pattern of patterns) {
+      const match = pattern.exec(text);
+      if (match && !genericWords.test(match[1])) return match[1];
+    }
     return "";
   }
 
@@ -831,19 +848,24 @@ function sampleTasks() {
   const energy = relativeDate(2);
   const dentist = relativeDate(7, "10:30");
   const passport = relativeDate(38);
-  const insurance = relativeDate(-1);
+  const insurance = relativeDate(14);
   return [
-    { id: crypto.randomUUID(), title: "Pay electricity bill", category: "bill", ...energy, reminder: "1440", notes: "Check this month’s meter reading", completed: false },
-    { id: crypto.randomUUID(), title: "Dentist check-up", category: "appointment", ...dentist, reminder: "60", notes: "Bring insurance card", completed: false },
-    { id: crypto.randomUUID(), title: "Renew passport", category: "renewal", ...passport, reminder: "10080", notes: "Prepare a new passport photo", completed: false },
-    { id: crypto.randomUUID(), title: "File insurance letter", category: "document", ...insurance, reminder: "0", notes: "Save the policy confirmation PDF", completed: false }
+    { id: crypto.randomUUID(), title: "Pay electricity bill", category: "bill", ...energy, reminder: "1440", notes: "Check this month’s meter reading", completed: false, sample: true },
+    { id: crypto.randomUUID(), title: "Dentist check-up", category: "appointment", ...dentist, reminder: "60", notes: "Bring insurance card", completed: false, sample: true },
+    { id: crypto.randomUUID(), title: "Renew passport", category: "renewal", ...passport, reminder: "10080", notes: "Prepare a new passport photo", completed: false, sample: true },
+    { id: crypto.randomUUID(), title: "File insurance letter", category: "document", ...insurance, reminder: "0", notes: "Save the policy confirmation PDF", completed: false, sample: true }
   ];
+}
+
+function migrateSampleTasks(tasks) {
+  const legacySamples = new Set(["Pay electricity bill", "Dentist check-up", "Renew passport", "File insurance letter"]);
+  return tasks.map((task) => task.sample || task.createdAt || !legacySamples.has(task.title) ? task : { ...task, sample: true });
 }
 
 function loadTasks() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    state.tasks = Array.isArray(saved) ? saved : sampleTasks();
+    state.tasks = Array.isArray(saved) ? migrateSampleTasks(saved) : sampleTasks();
   } catch (_) {
     state.tasks = sampleTasks();
   }
@@ -896,7 +918,7 @@ function render() {
     return `<article class="task-card ${task.completed ? "is-complete" : ""}" style="animation-delay:${Math.min(index * 35, 210)}ms">
       <button class="check-button" data-action="toggle" data-id="${task.id}" aria-label="${task.completed ? "Mark active" : "Mark complete"}">✓</button>
       <div class="task-main">
-        <div class="task-topline"><span class="category-pill">${categoryName(task.category)}</span><h3 class="task-title">${escapeHtml(task.title)}</h3></div>
+        <div class="task-topline"><span class="category-pill">${categoryName(task.category)}</span>${task.sample ? '<span class="sample-pill">Sample</span>' : ""}<h3 class="task-title">${escapeHtml(task.title)}</h3></div>
         ${task.notes ? `<p class="task-note">${escapeHtml(task.notes)}</p>` : ""}
       </div>
       <div class="task-side">
@@ -908,6 +930,8 @@ function render() {
       </div>
     </article>`;
   }).join("") : `<div class="empty-state"><strong>Clear skies.</strong><span>No tasks match this view.</span></div>`;
+
+  $("#sampleNotice").hidden = !state.tasks.some((task) => task.sample);
 
   const active = state.tasks.filter((task) => !task.completed);
   $("#dueSoonCount").textContent = active.filter((task) => Core.daysUntil(task, now) <= 7).length;
@@ -1099,14 +1123,13 @@ function resetLocalData() {
   window.location.reload();
 }
 
-function downloadFeedback() {
+function openFeedbackIssue() {
   const rating = $("#feedbackRating").value;
   const feedback = $("#feedbackText").value.trim();
-  const note = `Orbit Abroad private beta feedback\nDate: ${new Date().toLocaleDateString()}\nUsefulness: ${rating}/5\n\nWhat confused me or felt missing:\n${feedback}\n`;
-  downloadFile(`orbit-abroad-feedback-${Core.dayKey(new Date())}.txt`, note, "text/plain;charset=utf-8");
-  $("#feedbackDialog").close();
-  $("#feedbackForm").reset();
-  showToast("Feedback note downloaded—thank you");
+  const title = "[Beta feedback] Orbit Abroad experience";
+  const body = `## Beta feedback\n\n**Usefulness:** ${rating}/5\n\n**What confused me or felt missing:**\n${feedback}\n\n---\nI confirm that this report contains no personal or sensitive information.`;
+  const issueUrl = `https://github.com/gdifranco1/orbit-abroad/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  window.location.assign(issueUrl);
 }
 
 async function enableNotifications() {
@@ -1171,9 +1194,15 @@ $("#briefInboxButton").addEventListener("click", () => {
 $("#welcomeForm").addEventListener("submit", saveOnboarding);
 $("#settingsButton").addEventListener("click", showWelcome);
 $("#resetDataButton").addEventListener("click", resetLocalData);
+$("#clearSamplesButton").addEventListener("click", () => {
+  state.tasks = state.tasks.filter((task) => !task.sample);
+  saveTasks();
+  render();
+  showToast("Sample tasks removed");
+});
 $("#feedbackButton").addEventListener("click", () => $("#feedbackDialog").showModal());
 $("#closeFeedbackButton").addEventListener("click", () => $("#feedbackDialog").close());
-$("#feedbackForm").addEventListener("submit", (event) => { event.preventDefault(); downloadFeedback(); });
+$("#feedbackForm").addEventListener("submit", (event) => { event.preventDefault(); openFeedbackIssue(); });
 $("#exportButton").addEventListener("click", exportBackup);
 $("#importInput").addEventListener("change", importBackup);
 $("#installButton").addEventListener("click", async () => {

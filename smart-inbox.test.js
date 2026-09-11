@@ -14,6 +14,12 @@ test("extracts a bill with amount, deadline, and account reference", () => {
   assert.ok(result.confidence >= 80);
 });
 
+test("does not mistake the word account for an account reference", () => {
+  const result = Inbox.analyze("Subject: Electricity bill reminder\nYour electricity bill of $128.44 is due in 14 days. Please reference account ending 4821.", reference);
+  assert.equal(result.reference, "4821");
+  assert.equal(result.notes, "Amount: $128.44 · Reference: 4821");
+});
+
 test("extracts an appointment date and twelve-hour time", () => {
   const result = Inbox.analyze("Appointment confirmed with Dr. Chen for October 3, 2026 at 10:30 AM. Confirmation ABC123.", reference);
   assert.equal(result.category, "appointment");

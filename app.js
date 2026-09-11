@@ -42,19 +42,24 @@ function sampleTasks() {
   const energy = relativeDate(2);
   const dentist = relativeDate(7, "10:30");
   const passport = relativeDate(38);
-  const insurance = relativeDate(-1);
+  const insurance = relativeDate(14);
   return [
-    { id: crypto.randomUUID(), title: "Pay electricity bill", category: "bill", ...energy, reminder: "1440", notes: "Check this month’s meter reading", completed: false },
-    { id: crypto.randomUUID(), title: "Dentist check-up", category: "appointment", ...dentist, reminder: "60", notes: "Bring insurance card", completed: false },
-    { id: crypto.randomUUID(), title: "Renew passport", category: "renewal", ...passport, reminder: "10080", notes: "Prepare a new passport photo", completed: false },
-    { id: crypto.randomUUID(), title: "File insurance letter", category: "document", ...insurance, reminder: "0", notes: "Save the policy confirmation PDF", completed: false }
+    { id: crypto.randomUUID(), title: "Pay electricity bill", category: "bill", ...energy, reminder: "1440", notes: "Check this month’s meter reading", completed: false, sample: true },
+    { id: crypto.randomUUID(), title: "Dentist check-up", category: "appointment", ...dentist, reminder: "60", notes: "Bring insurance card", completed: false, sample: true },
+    { id: crypto.randomUUID(), title: "Renew passport", category: "renewal", ...passport, reminder: "10080", notes: "Prepare a new passport photo", completed: false, sample: true },
+    { id: crypto.randomUUID(), title: "File insurance letter", category: "document", ...insurance, reminder: "0", notes: "Save the policy confirmation PDF", completed: false, sample: true }
   ];
+}
+
+function migrateSampleTasks(tasks) {
+  const legacySamples = new Set(["Pay electricity bill", "Dentist check-up", "Renew passport", "File insurance letter"]);
+  return tasks.map((task) => task.sample || task.createdAt || !legacySamples.has(task.title) ? task : { ...task, sample: true });
 }
 
 function loadTasks() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    state.tasks = Array.isArray(saved) ? saved : sampleTasks();
+    state.tasks = Array.isArray(saved) ? migrateSampleTasks(saved) : sampleTasks();
   } catch (_) {
     state.tasks = sampleTasks();
   }
@@ -107,7 +112,7 @@ function render() {
     return `<article class="task-card ${task.completed ? "is-complete" : ""}" style="animation-delay:${Math.min(index * 35, 210)}ms">
       <button class="check-button" data-action="toggle" data-id="${task.id}" aria-label="${task.completed ? "Mark active" : "Mark complete"}">✓</button>
       <div class="task-main">
-        <div class="task-topline"><span class="category-pill">${categoryName(task.category)}</span><h3 class="task-title">${escapeHtml(task.title)}</h3></div>
+        <div class="task-topline"><span class="category-pill">${categoryName(task.category)}</span>${task.sample ? '<span class="sample-pill">Sample</span>' : ""}<h3 class="task-title">${escapeHtml(task.title)}</h3></div>
         ${task.notes ? `<p class="task-note">${escapeHtml(task.notes)}</p>` : ""}
       </div>
       <div class="task-side">
@@ -119,6 +124,8 @@ function render() {
       </div>
     </article>`;
   }).join("") : `<div class="empty-state"><strong>Clear skies.</strong><span>No tasks match this view.</span></div>`;
+
+  $("#sampleNotice").hidden = !state.tasks.some((task) => task.sample);
 
   const active = state.tasks.filter((task) => !task.completed);
   $("#dueSoonCount").textContent = active.filter((task) => Core.daysUntil(task, now) <= 7).length;
@@ -310,14 +317,13 @@ function resetLocalData() {
   window.location.reload();
 }
 
-function downloadFeedback() {
+function openFeedbackIssue() {
   const rating = $("#feedbackRating").value;
   const feedback = $("#feedbackText").value.trim();
-  const note = `Orbit Abroad private beta feedback\nDate: ${new Date().toLocaleDateString()}\nUsefulness: ${rating}/5\n\nWhat confused me or felt missing:\n${feedback}\n`;
-  downloadFile(`orbit-abroad-feedback-${Core.dayKey(new Date())}.txt`, note, "text/plain;charset=utf-8");
-  $("#feedbackDialog").close();
-  $("#feedbackForm").reset();
-  showToast("Feedback note downloaded—thank you");
+  const title = "[Beta feedback] Orbit Abroad experience";
+  const body = `## Beta feedback\n\n**Usefulness:** ${rating}/5\n\n**What confused me or felt missing:**\n${feedback}\n\n---\nI confirm that this report contains no personal or sensitive information.`;
+  const issueUrl = `https://github.com/gdifranco1/orbit-abroad/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  window.location.assign(issueUrl);
 }
 
 async function enableNotifications() {
@@ -382,9 +388,15 @@ $("#briefInboxButton").addEventListener("click", () => {
 $("#welcomeForm").addEventListener("submit", saveOnboarding);
 $("#settingsButton").addEventListener("click", showWelcome);
 $("#resetDataButton").addEventListener("click", resetLocalData);
+$("#clearSamplesButton").addEventListener("click", () => {
+  state.tasks = state.tasks.filter((task) => !task.sample);
+  saveTasks();
+  render();
+  showToast("Sample tasks removed");
+});
 $("#feedbackButton").addEventListener("click", () => $("#feedbackDialog").showModal());
 $("#closeFeedbackButton").addEventListener("click", () => $("#feedbackDialog").close());
-$("#feedbackForm").addEventListener("submit", (event) => { event.preventDefault(); downloadFeedback(); });
+$("#feedbackForm").addEventListener("submit", (event) => { event.preventDefault(); openFeedbackIssue(); });
 $("#exportButton").addEventListener("click", exportBackup);
 $("#importInput").addEventListener("change", importBackup);
 $("#installButton").addEventListener("click", async () => {

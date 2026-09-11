@@ -1,5 +1,5 @@
 "use strict";
-const CACHE = "orbit-abroad-v1";
+const CACHE = "orbit-abroad-v2";
 const ASSETS = [
   "./", "./index.html", "./site.css", "./site.js", "./app.html", "./app.css", "./app.js",
   "./core.js", "./smart-inbox.js", "./privacy.html", "./manifest.webmanifest",

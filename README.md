@@ -1,8 +1,8 @@
 # Orbit Abroad
 
-A launch-preparation package for a free, local-first private beta serving international students and expats in the United States.
+A live, free, local-first beta serving international students and expats in the United States.
 
-**Authorized GitHub Pages target:** <https://gdifranco1.github.io/orbit-abroad/>
+**Live GitHub Pages site:** <https://gdifranco1.github.io/orbit-abroad/>
 
 ## Included
 
@@ -39,10 +39,6 @@ python3 validate.py
 - Users can export/import backups and delete all local Orbit data.
 - Exported backups are unencrypted and must be protected by the user.
 
-## Publication boundary
+## Publication status
 
-The files are prepared for static HTTPS hosting, but they have not been published or deployed. Publishing requires Cameron’s approval under the workspace rules. Before a real public launch, have the privacy notice and beta terms reviewed for the final operator, jurisdiction, hosting setup, and domain.
-
-Cameron approved preparing this folder for public publication under Giulio's
-`gdifranco1/orbit-abroad` repository. No remote has been added and no code has
-been pushed. Follow `DEPLOYMENT.md` while authenticated only as `gdifranco1`.
+Orbit Abroad is published from the public `gdifranco1/orbit-abroad` repository. Before expanding beyond beta testing, have the privacy notice and beta terms reviewed for the final operator, jurisdiction, hosting setup, and domain.

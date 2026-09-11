@@ -3,7 +3,7 @@
 ## First-market definition
 
 - **Audience:** International students and recent expats living in the United States
-- **Stage:** Free private beta
+- **Stage:** Free beta
 - **Core job:** Turn unfamiliar notices into reviewed tasks with deadlines and useful details
 - **Promise:** “Find the deadline, amount, and next action—without uploading the document.”
 - **Boundary:** Orbit organizes information; it does not provide immigration, legal, financial, medical, tax, or government advice.

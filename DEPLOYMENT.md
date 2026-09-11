@@ -43,7 +43,7 @@ Run these commands yourself. GitHub may ask you to authenticate; do not share a 
 ```bash
 cd /home/caragon/giulio-workspace/orbit-abroad
 git add .
-git commit -m "Launch Orbit Abroad private beta"
+git commit -m "Launch Orbit Abroad beta"
 git remote add origin https://github.com/gdifranco1/orbit-abroad.git
 git push -u origin main
 ```
@@ -73,7 +73,7 @@ Expected URL:
 Open the expected URL in a private/incognito window and check:
 
 - The landing page is styled.
-- **Try the private beta** opens `app.html`.
+- **Try the free beta** opens `app.html`.
 - Onboarding appears and requires the redaction acknowledgment.
 - The utility example produces a reviewed task.
 - Refreshing keeps the task.
@@ -85,7 +85,7 @@ Open the expected URL in a private/incognito window and check:
 
 ## GitHub Pages limitation
 
-GitHub Pages does not apply the repository's `_headers` file. The production HTML therefore includes a Content Security Policy meta tag and referrer policy. Some response-level protections—particularly `frame-ancestors`—require a host that supports custom HTTP headers. This does not block the private beta, but it is a known hosting limitation.
+GitHub Pages does not apply the repository's `_headers` file. The production HTML therefore includes a Content Security Policy meta tag and referrer policy. Some response-level protections—particularly `frame-ancestors`—require a host that supports custom HTTP headers. This does not block the beta, but it is a known hosting limitation.
 
 ## Before inviting customers
 

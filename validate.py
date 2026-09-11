@@ -16,6 +16,7 @@ REQUIRED = [
     "manifest.webmanifest", "service-worker.js", "privacy.html", "assets/icon.svg",
     "assets/icon-192.png", "assets/icon-512.png", "assets/og-card.png",
     "sitemap.xml", "robots.txt", "404.html", "LICENSE", ".nojekyll", "DEPLOYMENT.md",
+    ".github/ISSUE_TEMPLATE/beta-feedback.md",
 ]
 PRODUCTION_ORIGIN = "https://gdifranco1.github.io/orbit-abroad/"
 

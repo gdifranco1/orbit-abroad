@@ -17,7 +17,7 @@
 <body>
   <div class="app-shell">
     <div class="edition-bar">
-      <span>Free private beta · United States</span>
+      <span>Free beta · United States</span>
       <span>Local-first · No account required</span>
     </div>
     <header class="topbar">
@@ -103,6 +103,11 @@
           </label>
         </div>
 
+        <div class="sample-notice" id="sampleNotice" hidden>
+          <div><strong>Sample desk</strong><span>These demonstration tasks are not personal data. Keep them for a tour or remove them to start fresh.</span></div>
+          <button class="mini-button" id="clearSamplesButton" type="button">Remove sample tasks</button>
+        </div>
+
         <div class="controls">
           <div class="tabs" id="viewTabs" role="tablist" aria-label="Task views">
             <button class="tab active" data-view="active" role="tab">Active</button>
@@ -134,11 +139,11 @@
     </main>
   </div>
 
-  <dialog id="welcomeDialog" class="launch-dialog">
+  <dialog id="welcomeDialog" class="launch-dialog" aria-labelledby="welcomeTitle" aria-describedby="welcomeDescription">
     <form id="welcomeForm" method="dialog">
-      <p class="section-number">WELCOME / PRIVATE BETA</p>
-      <h2>A calmer desk for life in a new country.</h2>
-      <p class="dialog-lede">Orbit works locally in this browser. Before your first notice, set your defaults and learn what not to paste.</p>
+      <p class="section-number">WELCOME / FREE BETA</p>
+      <h2 id="welcomeTitle">A calmer desk for life in a new country.</h2>
+      <p class="dialog-lede" id="welcomeDescription">Orbit works locally in this browser. Before your first notice, set your defaults and learn what not to paste.</p>
       <div class="onboarding-grid">
         <label class="field">Region
           <select id="regionInput"><option value="US" selected>United States</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="EU">European Union</option><option value="other">Other</option></select>
@@ -158,24 +163,24 @@
     </form>
   </dialog>
 
-  <dialog id="feedbackDialog" class="launch-dialog feedback-dialog">
+  <dialog id="feedbackDialog" class="launch-dialog feedback-dialog" aria-labelledby="feedbackTitle" aria-describedby="feedbackDescription">
     <form id="feedbackForm" method="dialog">
-      <div class="dialog-heading"><div><p class="eyebrow">PRIVATE BETA FEEDBACK</p><h2>Help shape Orbit.</h2></div><button class="icon-button" id="closeFeedbackButton" type="button" aria-label="Close">×</button></div>
+      <div class="dialog-heading"><div><p class="eyebrow">FREE BETA FEEDBACK</p><h2 id="feedbackTitle">Help shape Orbit.</h2></div><button class="icon-button" id="closeFeedbackButton" type="button" aria-label="Close feedback">×</button></div>
       <label class="field">How useful was this session?
         <select id="feedbackRating"><option value="5">5 — Extremely useful</option><option value="4">4 — Useful</option><option value="3">3 — Somewhat useful</option><option value="2">2 — Not very useful</option><option value="1">1 — Not useful</option></select>
       </label>
       <label class="field field-wide">What confused you or felt missing?
         <textarea id="feedbackText" rows="5" maxlength="1000" required placeholder="The most important thing for us to improve is…"></textarea>
       </label>
-      <p class="privacy-note">Feedback stays in this form until you download it. Orbit does not send it automatically.</p>
-      <div class="dialog-actions"><a class="privacy-link" href="mailto:gdifranco100@gmail.com?subject=Orbit%20Abroad%20beta%20feedback">Email instead</a><button class="button button-dark" type="submit">Download feedback note</button></div>
+      <p class="privacy-note" id="feedbackDescription">Continue to review a prefilled public GitHub issue. Nothing is posted automatically. Do not include personal or sensitive information.</p>
+      <div class="dialog-actions"><a class="privacy-link" href="https://github.com/gdifranco1/orbit-abroad/issues" target="_blank" rel="noopener noreferrer">View public feedback</a><button class="button button-dark" type="submit">Review on GitHub</button></div>
     </form>
   </dialog>
 
-  <dialog id="taskDialog">
+  <dialog id="taskDialog" aria-labelledby="taskDialogTitle" aria-describedby="taskDialogDescription">
     <form id="taskForm" method="dialog">
       <div class="dialog-heading">
-        <div><p class="eyebrow">NEW ITEM</p><h2>Add to your orbit</h2></div>
+        <div><p class="eyebrow">NEW ITEM</p><h2 id="taskDialogTitle">Add to your orbit</h2></div>
         <button class="icon-button" id="closeFormButton" type="button" aria-label="Close">×</button>
       </div>
 
@@ -211,7 +216,7 @@
       <label class="field field-wide">Note or reference <small>(optional)</small>
         <textarea id="notesInput" name="notes" maxlength="240" rows="3" placeholder="Account, location, document name…"></textarea>
       </label>
-      <p class="privacy-note">🔒 Saved only in this browser on this device.</p>
+      <p class="privacy-note" id="taskDialogDescription">🔒 Saved only in this browser on this device.</p>
       <div class="dialog-actions">
         <button class="button button-quiet" id="cancelFormButton" type="button">Cancel</button>
         <button class="button button-dark" type="submit">Add task</button>

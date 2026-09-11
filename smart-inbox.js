@@ -109,10 +109,14 @@
 
   function extractReference(text) {
     const patterns = [
-      /\b(?:invoice|confirmation|reference|ref|policy)\s*(?:number|no\.?|#|:)?\s*([A-Z0-9-]{4,})\b/i,
-      /\baccount\s+(?:ending\s+in\s+|ending\s+|#)?([A-Z0-9-]{4,})\b/i
+      /\baccount\s+(?:ending\s+(?:in\s+)?|number\s*(?:no\.?|#|:)?\s*|#\s*)?([A-Z0-9-]{4,})\b/i,
+      /\b(?:invoice|confirmation|reference|ref|policy)\s*(?:number|no\.?|#|:)?\s*([A-Z0-9-]{4,})\b/i
     ];
-    for (const pattern of patterns) { const match = pattern.exec(text); if (match) return match[1]; }
+    const genericWords = /^(?:account|ending|number|please|details)$/i;
+    for (const pattern of patterns) {
+      const match = pattern.exec(text);
+      if (match && !genericWords.test(match[1])) return match[1];
+    }
     return "";
   }
 
